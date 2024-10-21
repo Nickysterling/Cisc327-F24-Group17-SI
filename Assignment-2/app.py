@@ -10,21 +10,6 @@ app = Flask(
 )
 
 
-# # Helper function to create and append a new user (either regular or Google user)
-# def create_user(username, email, password, user_type, is_google_user=False):
-
-#     newUser = User(
-#         username=username, email=email, password=password, user_type=user_type
-#     )
-
-#     # if
-
-#     if is_google_user:
-#         google_users.append(newUser)
-#     else:
-#         userList.append(newUser)
-
-
 # Route for user registration
 @app.route("/", methods=["GET", "POST"])
 def register():
@@ -93,7 +78,7 @@ def login():
     print(
         "User List:",
         getUserData(),
-        "\Google User List:",
+        "Google User List:",
         getUserData(isGoogleAuth=True),
     )
     return render_template("login/login.html")
