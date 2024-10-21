@@ -84,9 +84,117 @@ def login():
     return render_template("login/login.html")
 
 
+# DIFFERENT
+# @app.route("/login", methods=["GET", "POST"])
+# def login():
+#     # collecting the form fields
+#     # checking to see if fields match db
+#     # if yes: success, else failure
+
+#     if request.method == "POST":
+#         username = request.form["username"]
+#         email = request.form["email"]
+#         password = request.form["password"]
+
+#         # Check if the email and password match a user in the users list
+#         user = next(
+#             (
+#                 u
+#                 for u in users
+#                 if u["username"] == username
+#                 and u["email"] == email
+#                 and u["password"] == password
+#             ),
+#             None,
+#         )
+
+#         if user:
+#             # If the credentials match, redirect to login success page
+#             return redirect(url_for("login_success", username=user["username"]))
+#         else:
+#             # If credentials do not match, redirect to login failure page
+#             return redirect(url_for("login_failure"))
+
+#     return render_template("login/login.html")
+
+
+# @app.route("/choose_google_account")
+# def choose_google_account():
+#     return render_template("login/auth.html")
+
+
+# Route to login with a Google account
 @app.route("/choose_google_account")
 def choose_google_account():
-    return render_template("login/auth.html")
+    error = request.args.get("error")
+    return render_template("login/auth.html", error=error)
+
+
+# # Route for forgot password functionality
+# @app.route("/forgot_password", methods=["GET", "POST"])
+# def forgot_password():
+#     if request.method == "POST":
+#         # Simulate password reset functionality
+#         return redirect(url_for("forgot_password_success"))
+#     return render_template("login/forgot_password.html")
+
+
+# # Route for successful password reset
+# @app.route("/forgot_password_success")
+# def forgot_password_success():
+#     return render_template("login/forgot_password_success.html")
+
+
+# if __name__ == "__main__":
+#     app.run(debug=True)
+
+
+# Route for Google sign in using email verification
+@app.route("/google_signin", methods=["POST"])
+def google_signin():
+    email = request.form["email"]
+    user = find_google_user(email)
+
+    if user:
+        # Email recognized, redirect to password entry page
+        return redirect(url_for("password_entry", email=email))
+    else:
+        # Email not recognized, redirect back with error parameter
+        return redirect(url_for("choose_google_account", error=1))
+
+
+# Route for Google sign in password page
+@app.route("/password_entry/<email>")
+def password_entry(email):
+    error = request.args.get("error")
+    return render_template("login/auth_pass.html", email=email, error=error)
+
+
+# Direct user to a success message if correct password, else show failure message
+@app.route("/password_verify/<email>", methods=["POST"])
+def password_verify(email):
+    password = request.form["password"]
+    user = find_google_user(email)
+
+    if user and user["password"] == password:
+        # Password is correct, redirect to login success page
+        return redirect(url_for("login_success", username=user["username"]))
+    else:
+        # Password is incorrect, redirect back to the password page with an error
+        return redirect(url_for("password_entry", email=email, error=1))
+
+
+# Route for login success page
+@app.route("/login_success")
+def login_success():
+    username = request.args.get("username")
+    return render_template("login/login_success.html", username=username)
+
+
+# Route for login failure page
+@app.route("/login_failure")
+def login_failure():
+    return render_template("login/login_failure.html")
 
 
 # Route for forgot password functionality
@@ -102,6 +210,11 @@ def forgot_password():
 @app.route("/forgot_password_success")
 def forgot_password_success():
     return render_template("login/forgot_password_success.html")
+
+
+@app.route("/tenants")
+def tenants():
+    return render_template("tenants/tenants.html")
 
 
 if __name__ == "__main__":
