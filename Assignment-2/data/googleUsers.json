@@ -1,25 +1,7 @@
 [
     {
-        "username": "google_user_0",
-        "email": "google_user_0@gmail.com",
-        "password": "123",
-        "user_type": "Landlord"
-    },
-    {
-        "username": "google_user_1",
-        "email": "google_user_1@gmail.com",
-        "password": "123",
-        "user_type": "Landlord"
-    },
-    {
-        "username": "google_user_2",
-        "email": "google_user_2@gmail.com",
-        "password": "123",
-        "user_type": "Landlord"
-    },
-    {
-        "username": "google_user_3",
-        "email": "google_user_3@gmail.com",
+        "username": "google_user_00",
+        "email": "google_user_00@gmail.com",
         "password": "123",
         "user_type": "Landlord"
     }

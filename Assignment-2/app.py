@@ -36,9 +36,13 @@ def google_redirect():
 
     # Assign a mock credential set for google user
     userIterator = len(getUserData(isGoogleAuth=True))
+
+    # Ensure the iterator is two digits, with leading zeros if necessary
+    formattedIterator = str(userIterator).zfill(2)
+
     newUser = User(
-        username=f"google_user_{userIterator}",
-        email=f"google_user_{userIterator}@gmail.com",
+        username=f"google_user_{formattedIterator}",
+        email=f"google_user_{formattedIterator}@gmail.com",
         password="123",
         user_type="Landlord",
     )
@@ -71,7 +75,6 @@ def go_back():
     return redirect(url_for("register"))
 
 
-# DIFFERENT
 @app.route("/login", methods=["GET", "POST"])
 def login():
     # collecting the form fields
