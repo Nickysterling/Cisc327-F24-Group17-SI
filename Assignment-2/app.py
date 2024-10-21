@@ -30,7 +30,7 @@ def register():
     return render_template("register/register.html")
 
 
-# Route to simulate Google login and register a Google user
+# Route to simulate registration for a Google user
 @app.route("/google_redirect")
 def google_redirect():
 
@@ -123,13 +123,15 @@ def google_signin():
     email = request.form["email"]
 
     userAccounts = getUserData(isGoogleAuth=True)
+
+    # Loop through the list of User objects and print their details
     for account in userAccounts:
         if account.email == email:
             # Email recognized, redirect to password entry page
             return redirect(url_for("password_entry", email=email))
-        else:
-            # Email not recognized, redirect back with error parameter
-            return redirect(url_for("choose_google_account", error=1))
+        
+    # Email not recognized, redirect back with error parameter
+    return redirect(url_for("choose_google_account", error=1))
 
 
 # Route for Google sign in password page
@@ -149,9 +151,9 @@ def password_verify(email):
         if account.password == password and account.email == email:
             # Password is correct, redirect to login success page
             return redirect(url_for("login_success", username=account.username))
-        else:
-            # Password is incorrect, redirect back to the password page with an error
-            return redirect(url_for("password_entry", email=email, error=1))
+        
+    # Password is incorrect, redirect back to the password page with an error
+    return redirect(url_for("password_entry", email=email, error=1))
 
 
 # Route for login success page
