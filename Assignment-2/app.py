@@ -110,11 +110,6 @@ def login():
     return render_template("login/login.html")
 
 
-# @app.route("/choose_google_account")
-# def choose_google_account():
-#     return render_template("login/auth.html")
-
-
 # Route to login with a Google account
 @app.route("/choose_google_account")
 def choose_google_account():
@@ -122,37 +117,19 @@ def choose_google_account():
     return render_template("login/auth.html", error=error)
 
 
-# # Route for forgot password functionality
-# @app.route("/forgot_password", methods=["GET", "POST"])
-# def forgot_password():
-#     if request.method == "POST":
-#         # Simulate password reset functionality
-#         return redirect(url_for("forgot_password_success"))
-#     return render_template("login/forgot_password.html")
-
-
-# # Route for successful password reset
-# @app.route("/forgot_password_success")
-# def forgot_password_success():
-#     return render_template("login/forgot_password_success.html")
-
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
-
-
 # Route for Google sign in using email verification
 @app.route("/google_signin", methods=["POST"])
 def google_signin():
     email = request.form["email"]
-    user = find_google_user(email)
 
-    if user:
-        # Email recognized, redirect to password entry page
-        return redirect(url_for("password_entry", email=email))
-    else:
-        # Email not recognized, redirect back with error parameter
-        return redirect(url_for("choose_google_account", error=1))
+    userAccounts = getUserData(isGoogleAuth=True)
+    for account in userAccounts:
+        if account.email == email:
+            # Email recognized, redirect to password entry page
+            return redirect(url_for("password_entry", email=email))
+        else:
+            # Email not recognized, redirect back with error parameter
+            return redirect(url_for("choose_google_account", error=1))
 
 
 # Route for Google sign in password page
@@ -166,14 +143,15 @@ def password_entry(email):
 @app.route("/password_verify/<email>", methods=["POST"])
 def password_verify(email):
     password = request.form["password"]
-    user = find_google_user(email)
+    userAccounts = getUserData(isGoogleAuth=True)
 
-    if user and user["password"] == password:
-        # Password is correct, redirect to login success page
-        return redirect(url_for("login_success", username=user["username"]))
-    else:
-        # Password is incorrect, redirect back to the password page with an error
-        return redirect(url_for("password_entry", email=email, error=1))
+    for account in userAccounts:
+        if account.password == password and account.email == email:
+            # Password is correct, redirect to login success page
+            return redirect(url_for("login_success", username=account.username))
+        else:
+            # Password is incorrect, redirect back to the password page with an error
+            return redirect(url_for("password_entry", email=email, error=1))
 
 
 # Route for login success page
