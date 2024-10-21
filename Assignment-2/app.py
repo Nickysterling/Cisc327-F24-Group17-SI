@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for
-from apps.backend.models.userModel import User
-from apps.backend.registration.register import is_user_exists
 import json
-from apps.backend.registration.register import getUserData, setUserData
 from apps.backend.models.userModel import User
+from apps.backend.registration.register import getUserData, setUserData
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    template_folder="apps/frontend/templates",
+    static_folder="apps/frontend/static",
+)
+
 
 # # Helper function to create and append a new user (either regular or Google user)
 # def create_user(username, email, password, user_type, is_google_user=False):
@@ -27,21 +30,17 @@ app = Flask(__name__)
 def register():
     if request.method == "POST":
         # Get form data
-        username = request.form["username"]
-        email = request.form["email"]
-        password = request.form["password"]
-        user_type = request.form.get(
-            "user_type", "Tenant"
-        )  # Default to 'Tenant' if not provided
+        newUser = User(
+            username=request.form["username"],
+            email=request.form["email"],
+            password=request.form["password"],
+            user_type=request.form.get("user_type", "Tenant"),
+        )
 
-        # Check if the email or username already exists in both users and google_users
-        if is_user_exists(username, email):
+        if setUserData(newUser=newUser):
+            return redirect(url_for("register_success", username=newUser.username))
+        else:
             return redirect(url_for("register_failure", reason="user_exists"))
-
-        # Save the new user and redirect to success page
-        create_user(username, email, password, user_type, is_google_user=False)
-
-        return redirect(url_for("register_success", username=username))
 
     return render_template("register/register.html")
 
@@ -49,28 +48,22 @@ def register():
 # Route to simulate Google login and register a Google user
 @app.route("/google_redirect")
 def google_redirect():
-    base_username = "google_user_"
-    password = "123"  # Mock password for Google users
-    user_type = "Landlord"  # Assuming Google users are 'Landlord'
 
-    # Find the next available username and email for Google users
-    user_count = len(google_users) + 1
-    while True:
-        new_username = f"{base_username}{user_count:02d}"
-        new_email = f"user_{user_count:02d}@gmail.com"
+    # Assign a mock credential set for google user
+    userIterator = len(getUserData(isGoogleAuth=True))
+    newUser = User(
+        username=f"google_user_{userIterator}",
+        email=f"google_user_{userIterator}@gmail.com",
+        password="123",
+        user_type="Landlord",
+    )
 
-        # Check if the username or email already exists
-        if not is_user_exists(new_username, new_email):
-            break
-
-        # Increment the counter and try the next available username/email
-        user_count += 1
-
-    # Create and append the new Google user
-    create_user(new_username, new_email, password, user_type, is_google_user=True)
-
-    # Redirect to the register_success route with the username
-    return redirect(url_for("register_success", username=new_username))
+    # add to existing set of google users in database
+    if setUserData(newUser=newUser, isGoogleAuth=True):
+        return redirect(url_for("register_success", username=newUser.username))
+    else:
+        # Add proper error handling for google registration failure
+        return redirect(url_for("register_failure", reason="user_exists"))
 
 
 # Route for successful registration
@@ -96,9 +89,13 @@ def go_back():
 # Route for the login page
 @app.route("/login")
 def login():
+    # Debugging: print users to the console
     print(
-        "User List:", users, "\nGUser List:", google_users
-    )  # Debugging: print users to the console
+        "User List:",
+        getUserData(),
+        "\Google User List:",
+        getUserData(isGoogleAuth=True),
+    )
     return render_template("login/login.html")
 
 
