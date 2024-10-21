@@ -28,6 +28,58 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Open view-profile modal on click of button in dropdown menu
+    document.querySelectorAll('.view-profile-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            document.getElementById('modalOverlay').style.display = 'flex';
+        });
+    });
+
+    // Close view-profile modal when 'X' is clicked
+    document.getElementById('closeModal').addEventListener('click', () => {
+        document.getElementById('modalOverlay').style.display = 'none';
+    });
+
+    // Open send-message modal on click of a button in dropdown menu
+    document.querySelectorAll('.send-message-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            document.getElementById('messageOverlay').style.display = 'flex';
+        })
+    });
+
+    // Close send-message modal when 'Cancel' is clicked
+    document.getElementById('closeSendMessage').addEventListener('click', () => {
+        document.getElementById('messageOverlay').style.display = 'none';
+    });
+
+    // Close send-message modal and display success message when 'Send' is clicked 
+    document.getElementById('sendMessage').addEventListener('click', () => {
+        document.getElementById('messageOverlay').style.display = 'none';
+
+        // Show the toast message
+        const toast = document.getElementById('messageSuccessfulToast');
+        toast.style.display = 'block';
+        toast.classList.add('show');
+
+        // Hide the toast message after 3 seconds
+        setTimeout(() => {
+            toast.style.display = 'none';
+            toast.classList.remove('show');
+        }, 3000);
+    });
+
+     // Open message-history modal on click of button in dropdown menu
+     document.querySelectorAll('.message-history-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            document.getElementById('historyOverlay').style.display = 'flex';
+        });
+    });
+
+    // Close message-history modal when 'X' is clicked
+    document.getElementById('closeMessageHistory').addEventListener('click', () => {
+        document.getElementById('historyOverlay').style.display = 'none';
+    });
+
     // Sorting functionality for headers (excluding "Actions" column)
     const headerSpans = document.querySelectorAll('.tenants-table th span'); // Target only the span inside headers
     let sortOrder = 1; // 1 for ascending, -1 for descending
