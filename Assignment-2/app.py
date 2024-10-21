@@ -71,51 +71,43 @@ def go_back():
     return redirect(url_for("register"))
 
 
-# Route for the login page
-@app.route("/login")
-def login():
-    # Debugging: print users to the console
-    print(
-        "User List:",
-        getUserData(),
-        "Google User List:",
-        getUserData(isGoogleAuth=True),
-    )
-    return render_template("login/login.html")
-
-
 # DIFFERENT
-# @app.route("/login", methods=["GET", "POST"])
-# def login():
-#     # collecting the form fields
-#     # checking to see if fields match db
-#     # if yes: success, else failure
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    # collecting the form fields
+    # checking to see if fields match db
+    # if yes: success, else failure
 
-#     if request.method == "POST":
-#         username = request.form["username"]
-#         email = request.form["email"]
-#         password = request.form["password"]
+    if request.method == "POST":
 
-#         # Check if the email and password match a user in the users list
-#         user = next(
-#             (
-#                 u
-#                 for u in users
-#                 if u["username"] == username
-#                 and u["email"] == email
-#                 and u["password"] == password
-#             ),
-#             None,
-#         )
+        # Debugging: print users to the console
+        print(
+            "User List:",
+            getUserData(),
+            "Google User List:",
+            getUserData(isGoogleAuth=True),
+        )
 
-#         if user:
-#             # If the credentials match, redirect to login success page
-#             return redirect(url_for("login_success", username=user["username"]))
-#         else:
-#             # If credentials do not match, redirect to login failure page
-#             return redirect(url_for("login_failure"))
+        user = User(
+            username=request.form["username"],
+            email=request.form["email"],
+            password=request.form["password"],
+        )
 
-#     return render_template("login/login.html")
+        # Check if the email and password match a user in the users list
+        userAccounts = getUserData()
+        for account in userAccounts:
+            if (
+                account.username == user.username
+                and account.email == user.email
+                and account.password == user.password
+            ):
+                return redirect(url_for("login_success", username=user.username))
+
+        # If credentials do not match, redirect to login failure page
+        return redirect(url_for("login_failure"))
+
+    return render_template("login/login.html")
 
 
 # @app.route("/choose_google_account")
