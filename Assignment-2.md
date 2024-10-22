@@ -67,3 +67,17 @@ Assignment-2/
 │   └── unit_tests/
 └── requirements.txt
 ```
+## Individual Contributions
+
+| Name                                   | Task/Contribution      
+|----------------------------------------|----------------------------------------------------------------------
+| Samhith Sripada (20232740)             | 1. Refactored app.py, created data models, modularized backend
+|                                        | 2. Built test scripts for login and new user features (python)
+|----------------------------------------|----------------------------------------------------------------------
+| Nicholas Seegobin (20246787)           | 1. Built frontend screens for login, new user, and tenant dashboard
+|                                        | 2. Created Flask routing connections to navigate between screens
+|----------------------------------------|----------------------------------------------------------------------
+| Rodrigo Del Aguila Velarde (20275528)  | 1. Built tenant profile and messaging frontend screens
+|                                        | 2. Built test script for the tenant pop-up and messaging (Javascript)
+
+
