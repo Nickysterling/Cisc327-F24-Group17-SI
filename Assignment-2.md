@@ -38,7 +38,7 @@ cd Assignment-2
 2. To run the test scripts, navigate to this directory:
 
 ```
-cd Assignment-2/tests/unit_tests/
+cd tests/unit_tests/
 ```
 
 3: Then, enter this command to run the unit tests for the new user and login features
