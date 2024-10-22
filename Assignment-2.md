@@ -35,17 +35,21 @@ The flask server should start running on your local machine on port 5000.
 cd Assignment-2
 ```
 
-2. To run the test scripts, run these commands:
+2. To run the test scripts, navigate to this directory:
 
 ```
 cd Assignment-2/tests/unit_tests/
 ```
 
-Then, enter this command to run the unit tests for the new user and login features
+3: Then, enter this command to run the unit tests for the new user and login features
 
 ```
 pytest -v -s new_user.py login.py
 ```
+
+The output should look like this:
+<img width="1729" alt="Unit tests new user login" src="https://github.com/user-attachments/assets/117ae697-ecd4-4ead-8a6e-f72f5de3a96d">
+
 
 ## Project Structure
 
