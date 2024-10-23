@@ -11,10 +11,10 @@ This repository contains a backend and frontend application with user authentica
 pip install -r requirements.txt
 ```
 
-3. Install the latest version of Node:
+3. Install the latest version of Node: [https://nodejs.org/en/download/](https://nodejs.org/en)
 
 - For Windows:
-  1. Download the Node.js installer here: https://arc.net/l/quote/xqveinps
+  1. Download the Node.js installer here: 
   2. Run the installer
   3. Verify installation:
      
