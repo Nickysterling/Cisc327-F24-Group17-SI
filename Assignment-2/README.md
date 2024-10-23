@@ -50,6 +50,38 @@ pytest -v -s new_user.py login.py
 The output should look like this:
 <img width="1729" alt="Unit tests new user login" src="https://github.com/user-attachments/assets/117ae697-ecd4-4ead-8a6e-f72f5de3a96d">
 
+## Creating an Account
+
+1. Go to the Registration Page:
+   Navigate to the `/register` page on the website.
+
+2. Fill in the form:
+   - **Username**: Enter a unique username.
+   - **Email**: Provide a valid email address.
+   - **Password**: Create a secure password.
+   - **User Type**: Select **Landlord** (Tenant option is currently disabled).
+
+3. (Optional) Sign up with Google:
+   - Click **Continue with Google** to simulate registration via Google.
+
+4. Submit the form:
+   - Once all required fields are filled, click **Register** to complete your account creation.
+
+## Login Process
+
+1. Go to the Login Page:
+   Navigate to the `/login` page on the website.
+
+2. Enter your credentials:
+   - **Username**: Enter your registered username.
+   - **Email**: Enter your email address.
+   - **Password**: Provide your password.
+
+3. (Optional) Log in with Google:
+   - Click **Continue with Google** to log in using a simulated Google account. You can use the test credentials `google_user_00@gmail.com` with the password `123`. Alternatively, if you’ve registered your own Google account, simply replace `00` with the corresponding number from your registration and use the password `123`.
+
+4. Submit the form:
+   - Click **Login** to access your account.
 
 ## Project Structure
 
@@ -77,5 +109,3 @@ Assignment-2/
 |                                        | 2. Created Flask routing connections to navigate between screens
 | Rodrigo Del Aguila Velarde (20275528)  | 1. Built tenant profile and messaging frontend screens
 |                                        | 2. Built test script for the tenant pop-up and messaging (Javascript)
-
-

@@ -9,7 +9,6 @@ app = Flask(
     static_folder="apps/frontend/static",
 )
 
-
 # Route for user registration
 @app.route("/", methods=["GET", "POST"])
 def register():
