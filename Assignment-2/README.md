@@ -11,6 +11,53 @@ This repository contains a backend and frontend application with user authentica
 pip install -r requirements.txt
 ```
 
+3. Install the latest version of Node: [https://nodejs.org/en/download/](https://nodejs.org/en)
+
+- For Windows:
+  1. Download the Node.js installer here: 
+  2. Run the installer
+  3. Verify installation:
+     
+     ```
+     node -v
+     npm -v
+     ```
+
+- For macOS:
+  1. Using Homebrew (recommended):
+     
+     ```
+     brew install node
+     ```
+ 
+  3. For Linux (Ubuntu or Debian-based distributions):
+     
+     ```
+     sudo apt update
+     sudo apt install nodejs npm
+     ```
+     
+  4. Verify installation:
+     
+     ```
+     node -v
+     npm -v
+     ```
+
+4. Install packages for frontend:
+
+- Navigate to the frontend directory:
+  
+  ```
+  cd Assignment-2/apps/frontend
+  ```
+  
+- Install npm packages:
+  
+  ```
+  npm install
+  ```
+
 ## Running the Application
 
 1. Navigate to the project's root directory in your terminal after cloning the repository
@@ -49,6 +96,23 @@ pytest -v -s new_user.py login.py
 
 The output should look like this:
 <img width="1729" alt="Unit tests new user login" src="https://github.com/user-attachments/assets/117ae697-ecd4-4ead-8a6e-f72f5de3a96d">
+
+4. For frontend testing:
+- Navigate to the frontend directory:
+  
+  ```
+  cd Assignment-2/apps/frontend
+  ```
+  
+- Run tests with jest and jsdom:
+  
+  ```
+  npm test
+  ```
+
+The output should look like this:
+<img width="542" alt="Screenshot 2024-10-23 at 12 35 45 AM" src="https://github.com/user-attachments/assets/3e7c7b1d-7509-40c1-b539-305349d9816d">
+
 
 ## Creating an Account
 
