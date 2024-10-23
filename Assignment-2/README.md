@@ -17,6 +17,7 @@ pip install -r requirements.txt
   1. Download the Node.js installer here: https://arc.net/l/quote/xqveinps
   2. Run the installer
   3. Verify installation:
+     
      ```
      node -v
      npm -v
@@ -24,17 +25,20 @@ pip install -r requirements.txt
 
 - For macOS:
   1. Using Homebrew (recommended):
+     
      ```
      brew install node
      ```
  
-  2. For Linux (Ubuntu or Debian-based distributions):
+  3. For Linux (Ubuntu or Debian-based distributions):
+     
      ```
      sudo apt update
      sudo apt install nodejs npm
      ```
      
-  3. Verify installation:
+  4. Verify installation:
+     
      ```
      node -v
      npm -v
@@ -43,10 +47,13 @@ pip install -r requirements.txt
 4. Install packages for frontend:
 
 - Navigate to the frontend directory:
+  
   ```
   cd Assignment-2/apps/frontend
   ```
+  
 - Install npm packages:
+  
   ```
   npm install
   ```
@@ -92,11 +99,13 @@ The output should look like this:
 
 4. For frontend testing:
 - Navigate to the frontend directory:
+  
   ```
   cd Assignment-2/apps/frontend
   ```
   
 - Run tests with jest and jsdom:
+  
   ```
   npm test
   ```
