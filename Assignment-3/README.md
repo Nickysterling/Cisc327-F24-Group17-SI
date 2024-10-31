@@ -168,6 +168,7 @@ The flask server should start running on your local machine on port 5000.
    ```
 
 3. The output of the tenant tests should look like this image:
+
    <img width="542" alt="Screenshot 2024-10-23 at 12 35 45 AM" src="https://github.com/user-attachments/assets/3e7c7b1d-7509-40c1-b539-305349d9816d">
 
 ## Database Querying
