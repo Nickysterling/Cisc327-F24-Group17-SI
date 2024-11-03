@@ -29,18 +29,14 @@ def verifyUser(user: User, isGoogleAuth=False) -> bool:
 
     for account in userAccounts:
         if (
-            account.username is testUser.username
-            and account.email is testUser.email
-            and account.password is testUser.password
+            account.username is user.username
+            and account.email is user.email
+            and account.password is user.password
         ):
             userVerified = True
 
     return userVerified
 
-
-if verifyUser(testUser) is False:
-    setUserData(newUser=testUser, specialDirectory=overrideDBPath)
-    print("Test User added to database")
 
 # Read all the data in the database for context
 print("All standard users:")
@@ -49,6 +45,10 @@ print(getUserData(specialDirectory=overrideDBPath))
 
 def testUserLogin():
     """Unit Test: test if the user can login"""
+
+    if verifyUser(testUser) is False:
+        setUserData(newUser=testUser, specialDirectory=overrideDBPath)
+        print("Test User added to database")
 
     assert verifyUser(user=testUser) is True
     print("\nPASSED: User can login with correct credentials")

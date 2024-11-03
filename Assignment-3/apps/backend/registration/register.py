@@ -87,7 +87,7 @@ def deleteUser(username: str, isGoogleAuth=False, specialDirectory="") -> bool:
     cursor = conn.cursor()
 
     # Execute the delete statement
-    cursor.execute(f"DELETE FROM {table} WHERE username = ?", (username,))
+    cursor.execute(f"DELETE FROM {table} WHERE username = {username}")
     conn.commit()
 
     # Check if any row was deleted

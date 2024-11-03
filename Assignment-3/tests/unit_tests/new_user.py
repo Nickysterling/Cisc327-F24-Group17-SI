@@ -46,8 +46,12 @@ def testNewUserEmailFormat():
 def testProfileStored():
     """Unit Test: verify that a new user's profile has been saved successfully."""
 
-    randomTestUser = testUser
-    randomTestUser.username += f"{random.randint(0,100000)}"
+    # randomTestUser = testUser
+    # randomTestUser.username += f"{random.randint(0,100000)}"
+    
+    if verifyUser(testUser):
+        deleteUser(username=testUser.username, specialDirectory=overrideDBPath)
+        print("test user profile deleted")
 
-    assert setUserData(newUser=randomTestUser, specialDirectory=overrideDBPath) is True
+    assert setUserData(newUser=testUser, specialDirectory=overrideDBPath) is True
     print("\nPASSED: User profile saved successfully")
