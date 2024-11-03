@@ -29,9 +29,9 @@ def verifyUser(user: User, isGoogleAuth=False) -> bool:
 
     for account in userAccounts:
         if (
-            account.username is user.username
-            and account.email is user.email
-            and account.password is user.password
+            account.username == user.username
+            and account.email == user.email
+            and account.password == user.password
         ):
             userVerified = True
 

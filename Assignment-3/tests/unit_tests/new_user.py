@@ -1,7 +1,6 @@
 # test new user creation
 import pytest
 import os
-import random
 from apps.backend.models.userModel import User
 from apps.backend.registration.register import setUserData, deleteUser
 from .login import verifyUser
@@ -46,9 +45,6 @@ def testNewUserEmailFormat():
 def testProfileStored():
     """Unit Test: verify that a new user's profile has been saved successfully."""
 
-    # randomTestUser = testUser
-    # randomTestUser.username += f"{random.randint(0,100000)}"
-    
     if verifyUser(testUser):
         deleteUser(username=testUser.username, specialDirectory=overrideDBPath)
         print("test user profile deleted")

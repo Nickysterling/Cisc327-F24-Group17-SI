@@ -9,7 +9,7 @@ def get_db_connection(specialDirectory=""):
 
     conn = (
         sqlite3.connect("data/rentease.db")
-        if specialDirectory is ""
+        if specialDirectory == ""
         else sqlite3.connect(specialDirectory)
     )
     conn.row_factory = sqlite3.Row  # Enables accessing columns by name
@@ -87,7 +87,7 @@ def deleteUser(username: str, isGoogleAuth=False, specialDirectory="") -> bool:
     cursor = conn.cursor()
 
     # Execute the delete statement
-    cursor.execute(f"DELETE FROM {table} WHERE username = {username}")
+    cursor.execute(f"DELETE FROM {table} WHERE username = '{username}'")
     conn.commit()
 
     # Check if any row was deleted
