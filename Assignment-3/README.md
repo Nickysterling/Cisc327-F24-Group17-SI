@@ -12,7 +12,7 @@ This repository contains a backend and frontend application with user authentica
 
 #### Clone and open the repository
 
-1. Clone the repository using the comand below in your terminal:
+1. Clone the repository using the command below in your terminal:
 
 ```
 git clone https://github.com/Nickysterling/Cisc327-F24-Group17-SI.git
@@ -184,8 +184,9 @@ The flask server should start running on your local machine on port 5000.
    ```
 
 2. Run the backend unit tests:
-   Note: a) the command below runs two different test sets for two features: new user creation and logging in, using a single command
-         b) database contents get printed to the console every time we query the database for debugging and to heuristically verify the test passes.  
+
+   > Note: a) the command below runs two different test sets for two features: new user creation and logging in, using a single command
+   >       b) database contents get printed to the console every time we query the database for debugging and to heuristically verify the test passes.  
 
    ```
    pytest -v -s new_user.py login.py
