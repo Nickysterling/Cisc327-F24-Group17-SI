@@ -1,4 +1,4 @@
-# Assignment-3
+# CMPE 327 - Assignment 3: Rental Management Portal
 
 This repository contains a backend and frontend application with user authentication functionality.
 
@@ -10,11 +10,50 @@ This repository contains a backend and frontend application with user authentica
 - **Node.js**: Ensure Node.js is installed. Download it from [Node.js Downloads](https://nodejs.org/en/download/).
 - **SQLite**: Ensure SQLite is installed. Download it from [SQLite Downloads](https://www.sqlite.org/download.html)
 
+#### Clone and open the repository
+
+1. Clone the repository using the comand below in your terminal:
+
+```
+git clone https://github.com/Nickysterling/Cisc327-F24-Group17-SI.git
+```
+
+2. Then, open the cloned repository in your terminal
+
+3. Navigate to the Assignment-3 directory using the command:
+
+```
+cd Assignment-3
+```
+
 ### 2. Install Python Packages
 Install the required Python packages using `pip` and the `requirements.txt` file.
 
 ```
 pip install -r requirements.txt
+```
+
+This should download the following packages:
+1. Flask
+2. Werkzeug
+3. pytest
+4. pandas
+
+You can verify the installation by using the command `pip show <package_name>', for example:
+
+```pip show pytest```
+
+Should output:
+
+```
+Name: pytest
+Version: 8.3.3
+Summary: pytest: simple powerful testing with Python
+Home-page: https://docs.pytest.org/en/latest/
+Author: Holger Krekel, Bruno Oliveira, Ronny Pfannschmidt, Floris Bruynooghe, Brianna Laugher, Florian Bruhin, Others (See AUTHORS)
+Author-email: 
+License: MIT
+...
 ```
 
 ### 3. Install the latest version of Node.js and npm Packages
@@ -129,7 +168,7 @@ Since this project uses SQLite as its database backend, follow these instruction
 2. Start the Flask application:
 
    ```
-   python app.py
+   python3 app.py
    ```
 
 The flask server should start running on your local machine on port 5000.
@@ -144,14 +183,19 @@ The flask server should start running on your local machine on port 5000.
    cd tests/unit_tests
    ```
 
-2. Run the unit tests:
+2. Run the backend unit tests (this runs two different tests for two features: new user creation and loggin in, using a single command):
 
    ```
    pytest -v -s new_user.py login.py
    ```
 
-3. The output of the unit tests should look like this image:
-<img width="1729" alt="Unit Tests for New User Login" src="https://github.com/user-attachments/assets/117ae697-ecd4-4ead-8a6e-f72f5de3a96d">
+3. The output of the unit tests should look like this image (broken into seperate images for readability)
+
+Unit Test for `login.py`:
+<img width="1729" alt="Unit Tests for Login" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-3/tests/CMPE327_A3_login_test_cases_ss.png?raw=true">
+
+Unit Test for `new_user.py`:
+<img width="1729" alt="Unit Tests for Login" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-3/tests/CMPE327_A3_new-user_test_cases_ss.png?raw=true">
 
 ### 2. Tenant Page Testing
 
@@ -249,9 +293,7 @@ Assignment-3/
 
 | Name                                   | Task/Contribution      
 |----------------------------------------|----------------------------------------------------------------------
-| Samhith Sripada (20232740)             | 1.
-|                                        | 2.
-| Nicholas Seegobin (20246787)           | 1.
-|                                        | 2. 
-| Rodrigo Del Aguila Velarde (20275528)  | 1.
-|                                        | 2.
+| Samhith Sripada (20232740)             | 1. Updated the test cases for backend verification
+| Nicholas Seegobin (20246787)           | 1. Implemented database using SQLite
+| Rodrigo Del Aguila Velarde (20275528)  | 1. Simplified code and added comments
+|                                        | 
