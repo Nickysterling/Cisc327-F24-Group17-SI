@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RentEase</title>
+    <!-- Linking external fonts and the CSS file for styling -->
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tenants.css') }}">
+</head>
+
+<body>
+
+    <!-- Sidebar for navigation links -->
+    <div class="sidebar">
+        <div class="logo-container">
+            <!-- Logo for RentEase application -->
+            <img src="{{ url_for('static', filename='img/tenant_img/logo.png') }}" alt="Building Icon"
+                class="logo-icon">
+            <span class="logo-text">RentEase</span>
+        </div>
+        <!-- Navigation menu links -->
+        <ul class="nav-menu">
+            <li><img src="{{ url_for('static', filename='img/tenant_img/dashboard.png') }}"
+                    alt="Dashboard Icon">Dashboard</li>
+            <li><img src="{{ url_for('static', filename='img/tenant_img/properties.png') }}"
+                    alt="Properties Icon">Properties</li>
+            <li><img src="{{ url_for('static', filename='img/tenant_img/tenants.png') }}" alt="Tenants Icon">Tenants
+            </li>
+            <li><img src="{{ url_for('static', filename='img/tenant_img/lease.png') }}" alt="Lease Icon">Lease
+                Agreements</li>
+            <li><img src="{{ url_for('static', filename='img/tenant_img/payments.png') }}" alt="Payments Icon">Payments
+                & Invoices</li>
+            <li><img src="{{ url_for('static', filename='img/tenant_img/maintenance.png') }}"
+                    alt="Maintenance Icon">Maintenance Req</li>
+            <li><img src="{{ url_for('static', filename='img/tenant_img/fin_reports.png') }}"
+                    alt="Financial Reports Icon">Financial Reports</li>
+            <li><img src="{{ url_for('static', filename='img/tenant_img/applications.png') }}"
+                    alt="Applications Icon">Tenant Applications</li>
+            <li><img src="{{ url_for('static', filename='img/tenant_img/vacancies.png') }}"
+                    alt="Vacancies Icon">Vacancies</li>
+            <li><img src="{{ url_for('static', filename='img/tenant_img/feedback.png') }}" alt="Feedback Icon">Feedback
+                & Reviews</li>
+            <li><img src="{{ url_for('static', filename='img/tenant_img/messages.png') }}" alt="Messages Icon">Messages
+            </li>
+            <li><img src="{{ url_for('static', filename='img/tenant_img/settings.png') }}" alt="Settings Icon">Settings
+            </li>
+            <li>
+                <a href="{{ url_for('login') }}"
+                    style="text-decoration: none; color: inherit; display: flex; align-items: center; padding: 0;">
+                    <img src="{{ url_for('static', filename='img/tenant_img/logout.png') }}" alt="Logout Icon"> Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main content area -->
+    <div class="main-content">
+        <div class="header-content">
+            <h1 class="page-title">Tenants</h1>
+            <p class="subtext">Showing tenants for user_00.</p>
+
+            <!-- Add a container for the profile and notifications -->
+            <div class="user-info-container">
+                <img src="{{ url_for('static', filename='img/tenant_img/notifications.png') }}" alt="Notifications"
+                    class="notification-icon">
+
+                <div class="user-profile">
+                    <img src="{{ url_for('static', filename='img/tenant_img/profile.png') }}" alt="Profile Picture"
+                        class="profile-pic">
+                    <span class="username">Username</span>
+                </div>
+            </div>
+
+            <!-- Container for search bar and add button -->
+            <div class="header-actions">
+                <button class="add-tenant-button">Add New Tenant</button>
+                <div class="search-bar-container">
+                    <input type="text" class="search-bar" placeholder="Search...">
+                </div>
+            </div>
+        </div>
+
+        <!-- Table displaying tenant details -->
+        <table class="tenants-table">
+            <thead>
+                <tr>
+                    <th><span>Name</span></th>
+                    <th><span>Property</span></th>
+                    <th><span>Last Contacted</span></th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example row 1 -->
+                <tr>
+                    <td>John Doe</td>
+                    <td>Property A</td>
+                    <td>October 1, 2024</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="dropdown-toggle">...</button>
+                            <div class="dropdown-menu">
+                                <a class="view-profile-btn">View Profile</a>
+                                <a class="send-message-btn">Send Message</a>
+                                <a class="message-history-btn">Message History</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Example row 2 -->
+                <tr>
+                    <td>Jane Doe</td>
+                    <td>Property B</td>
+                    <td>September 1, 2024</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="dropdown-toggle">...</button>
+                            <div class="dropdown-menu">
+                                <a class="view-profile-btn">View Profile</a>
+                                <a class="send-message-btn">Send Message</a>
+                                <a class="message-history-btn">Message History</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Example row 3 -->
+                <tr>
+                    <td>Jean Doe</td>
+                    <td>Property C</td>
+                    <td>August 1, 2024</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="dropdown-toggle">...</button>
+                            <div class="dropdown-menu">
+                                <a class="view-profile-btn">View Profile</a>
+                                <a class="send-message-btn">Send Message</a>
+                                <a class="message-history-btn">Message History</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Modal Structure -->
+                <div class="modal-overlay" id="modalOverlay" style="display:none">
+                    <div class="view-profile">
+                        <div
+                            style="display: flex; flex-direction: row; justify-items:center; justify-content: space-between; padding-right: 20px; padding-left: 20px;"
+                        >
+                            <h2 style="color: #2E2E2E;">Jean Doe</h2>
+                            <button id="closeModal">
+                                <img src="{{ url_for('static', filename='img/tenant_img/view-profile-close.svg') }}">
+                            </button>
+                        </div>
+                        <div style="display: flex; flex-direction: row; padding-top: 50px; width: 100%; height: 100%; justify-items: center;">
+                            <img src="{{ url_for('static', filename='img/tenant_img/view-profile.png') }}" alt="Profile Icon" class="profile-icon" style="margin-top: 20px;">
+                            <div style="display: flex; flex-direction: column; margin-left: 40px;">
+                                <div style="display: flex; flex-direction: row; gap: 180px;">
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <h4 style="font-size: 18px; color: #F9A826;">Full Name</h4>
+                                        <p style="font-size: 20px; color: #2E2E2E;">Jean Doe</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <h4 style="font-size: 18px; color: #F9A826;">Property</h4>
+                                        <p style="font-size: 20px; color: #2E2E2E;">Property Name Here</p>
+                                    </div>
+                                </div>
+                                <div style="display: flex; flex-direction: row; gap: 130px; padding-top: 30px;">
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <h4 style="font-size: 18px; color: #F9A826;">Last Contacted</h4>
+                                        <p style="font-size: 20px; color: #2E2E2E;">August 1, 2024</p>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <h4 style="font-size: 18px; color: #F9A826;">Last Rent Payment</h4>
+                                        <p style="font-size: 20px; color: #2E2E2E;">$1500.00</p>
+                                    </div>
+                                </div>
+                                <h4 style="font-size: 18px; color: #F9A826; padding-top: 60px;">Additional Details</h4>
+                                <ul style="font-size: 16px; color: #2E2E2E; padding-top: 10px; padding-left: 15px;">
+                                    <li style="padding-bottom: 4px;">Great tenant, always pays rent on time</li>
+                                    <li style="padding-bottom: 4px;">2 sisters, one of them may be looking to rent in the next 6 months</li>
+                                    <li>Submitted a maintenance request last week</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message Structure -->
+                <div class="modal-overlay" id="messageOverlay" style="display: none;">
+                    <div class="send-message">
+                        <div
+                            style="display: flex; flex-direction: column; justify-items:center; justify-content: space-between; padding-right: 40px; padding-left: 40px; gap: 20px;"
+                        >
+                            <h2 style="color: #2E2E2E; padding-bottom: 10px;">Send Message to Jean Doe</h2>
+                            <textarea 
+                                placeholder="Type message here..."
+                                style="display: block; padding: 10px; color: #2E2E2E; border: 1px solid #D2D2D2; border-radius: 6px; width: 100%; height: 175px; resize: none; overflow: auto;"
+                            ></textarea>
+                            <div style="display: flex; flex-direction: row; gap: 20px; justify-content: end;">
+                                <button class="modal-button" id="closeSendMessage" style="background-color: #D60101;">
+                                    Cancel
+                                </button>
+                                <button class="modal-button" id="sendMessage" style="background-color: #3F3D56;">
+                                    Send
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Toast message container -->
+                <div id="messageSuccessfulToast" style="display:none; position: fixed; top: 20px; right: 20px; background-color: #28a745; color: white; padding: 15px; border-radius: 8px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); z-index: 100;">
+                    Message sent successfully!
+                </div>
+
+                <!-- Message History -->
+                <div class="modal-overlay" id="historyOverlay" style="display: none;">
+                    <div class="message-history">
+                        <div
+                            style="display: flex; flex-direction: column; justify-items:center; justify-content: space-between; padding-right: 40px; padding-left: 40px; gap: 20px;"
+                        >
+                            <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                <h2>Message History with Jean Doe</h2>
+                                <button id="closeMessageHistory" style="margin-right: -20px;">
+                                    <img src="{{ url_for('static', filename='img/tenant_img/view-profile-close.svg') }}">
+                                </button>
+                            </div>
+                            <div style="width: 100%; display: flex; flex-direction: column; gap: 10px;">
+                                <h4 style="color: #F9A826; text-align: end;">user_00 - 08/31/24 - 8PM</h4>
+                                <div style="display: flex; justify-content: flex-end; width: 260px; border: 1px solid; border-color: #D2D2D2; padding: 15px; border-radius: 6px; font-size: 16px; margin-left: auto;">
+                                    Hi Jean, just wanted to let you know your rent payment is due next week. Cheers, user_00
+                                </div>
+                            </div>
+                            
+                            <div style="width: 100%; display: flex; flex-direction: column; justify-content: start; gap: 10px;">
+                                <h4 style="color: #F9A826;">Jean - 09/01/24 - 7AM</h4>
+                                <div style="display: flex; width: 260px; border: 1px solid; border-color: #D2D2D2; padding: 15px; border-radius: 6px; font-size: 16px;">
+                                    Hi user_00! Thanks for letting me know. I am sending you the rent payment right now.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Linking the JavaScript functionality for dropdowns -->
+    <script src="{{ url_for('static', filename='js/tenants.js') }}"></script>
+</body>
+
+</html>
