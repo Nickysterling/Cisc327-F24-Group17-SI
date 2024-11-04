@@ -183,13 +183,15 @@ The flask server should start running on your local machine on port 5000.
    cd tests/unit_tests
    ```
 
-2. Run the backend unit tests (this runs two different tests for two features: new user creation and loggin in, using a single command):
+2. Run the backend unit tests:
+   Note: a) the command below runs two different test sets for two features: new user creation and logging in, using a single command
+         b) database contents get printed to the console every time we query the database for debugging and to heuristically verify the test passes.  
 
    ```
    pytest -v -s new_user.py login.py
    ```
 
-3. The output of the unit tests should look like this image (broken into seperate images for readability)
+4. The output of the unit tests should look like this image (broken into separate images for readability)
 
 Unit Test for `login.py`:
 <img width="1729" alt="Unit Tests for Login" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-3/tests/CMPE327_A3_login_test_cases_ss.png?raw=true">
