@@ -1,6 +1,6 @@
 import sqlite3
 import pandas as pd
-from ..models.userModel import User
+from apps.backend.models.userModel import User
 
 
 # Connect to the database
