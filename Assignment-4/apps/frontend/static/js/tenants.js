@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+function initializeTenants() {
     // Dropdown functionality
     const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
     
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.send-message-btn').forEach(button => {
         button.addEventListener('click', () => {
             document.getElementById('messageOverlay').style.display = 'flex';
-        })
+        });
     });
 
     // Close send-message modal when 'Cancel' is clicked
@@ -68,8 +68,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     });
 
-     // Open message-history modal on click of button in dropdown menu
-     document.querySelectorAll('.message-history-btn').forEach(button => {
+    // Open message-history modal on click of button in dropdown menu
+    document.querySelectorAll('.message-history-btn').forEach(button => {
         button.addEventListener('click', () => {
             document.getElementById('historyOverlay').style.display = 'flex';
         });
@@ -81,92 +81,95 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Sorting functionality for headers (excluding "Actions" column)
-    const headerSpans = document.querySelectorAll('.tenants-table th span'); // Target only the span inside headers
+    const headerSpans = document.querySelectorAll('.tenants-table th span');
     let sortOrder = 1; // 1 for ascending, -1 for descending
     let lastSortedHeader = null;
 
     headerSpans.forEach((span, index) => {
-        const header = span.parentElement; // Get the <th> element from the <span>
+        const header = span.parentElement;
 
-        if (header.innerText !== 'Actions') { // Exclude Actions column
+        if (header.textContent.trim() !== 'Actions') { // Exclude Actions column
             span.addEventListener('click', function() {
                 // Add fade-in effect
                 span.style.opacity = 0;
                 setTimeout(() => {
                     span.style.opacity = 1;
-                }, 50); // Add delay for smooth transition
+                }, 50);
 
                 // Sort the table column
-                sortTableByColumn(index, header); // Trigger sorting when the text is clicked
+                sortTableByColumn(index, header);
             });
         }
     });
+}
 
-    // Custom date parsing function for "August 1, 2024" format
-    function parseDate(dateString) {
-        const [month, day, year] = dateString.split(' ');
+// Custom date parsing function for "August 1, 2024" format
+function parseDate(dateString) {
+    const [month, day, year] = dateString.split(' ');
 
-        // Convert the month name to a month index (0 = January, 11 = December)
-        const months = {
-            January: 0, February: 1, March: 2, April: 3,
-            May: 4, June: 5, July: 6, August: 7,
-            September: 8, October: 9, November: 10, December: 11
-        };
+    // Convert the month name to a month index (0 = January, 11 = December)
+    const months = {
+        January: 0, February: 1, March: 2, April: 3,
+        May: 4, June: 5, July: 6, August: 7,
+        September: 8, October: 9, November: 10, December: 11
+    };
 
-        const monthIndex = months[month];
-        const dayNumber = parseInt(day.replace(',', '')); // Remove comma and parse the day
-        const yearNumber = parseInt(year);
+    const monthIndex = months[month];
+    const dayNumber = parseInt(day.replace(',', '')); // Remove comma and parse the day
+    const yearNumber = parseInt(year);
 
-        // Return a Date object
-        return new Date(yearNumber, monthIndex, dayNumber);
-    }
+    // Return a Date object
+    return new Date(yearNumber, monthIndex, dayNumber);
+}
 
-    function sortTableByColumn(columnIndex, header) {
-        const table = document.querySelector('.tenants-table tbody');
-        const rows = Array.from(table.querySelectorAll('tr'));
+function sortTableByColumn(columnIndex, header) {
+    const table = document.querySelector('.tenants-table tbody');
+    const rows = Array.from(table.querySelectorAll('tr'));
+    const headerText = header.textContent.trim();
+    let sortOrder = header.classList.contains('sorted-asc') ? -1 : 1;
 
-        const sortedRows = rows.sort((a, b) => {
-            const cellA = a.querySelectorAll('td')[columnIndex].innerText;
-            const cellB = b.querySelectorAll('td')[columnIndex].innerText;
+    const sortedRows = rows.sort((a, b) => {
+        const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
+        const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
 
-            // Check if we're sorting the "Last Contacted" (date) column
-            if (header.innerText.includes("Last Contacted")) {
-                const dateA = parseDate(cellA);
-                const dateB = parseDate(cellB);
-
-                return (dateA - dateB) * sortOrder;
-            }
-
-            // Fallback to string comparison for non-date columns
-            if (cellA.toLowerCase() < cellB.toLowerCase()) {
-                return -1 * sortOrder;
-            } else if (cellA.toLowerCase() > cellB.toLowerCase()) {
-                return 1 * sortOrder;
-            } else {
-                return 0;
-            }
-        });
-
-        // Rebuild the table body with the sorted rows
-        table.innerHTML = '';
-        sortedRows.forEach(row => table.appendChild(row));
-
-        // Reset previous header style
-        if (lastSortedHeader && lastSortedHeader !== header) {
-            lastSortedHeader.classList.remove('sorted-asc', 'sorted-desc');
+        // Check if we're sorting the "Last Contacted" column
+        if (headerText.includes('Last Contacted')) {
+            const dateA = parseDate(cellA);
+            const dateB = parseDate(cellB);
+            return (dateA - dateB) * sortOrder;
         }
 
-        // Toggle the sort order and style the clicked header
-        if (sortOrder === 1) {
-            header.classList.remove('sorted-desc');
-            header.classList.add('sorted-asc');
-        } else {
-            header.classList.remove('sorted-asc');
-            header.classList.add('sorted-desc');
-        }
+        // Regular string comparison for other columns
+        return cellA.localeCompare(cellB) * sortOrder;
+    });
 
-        // Toggle the sort order for the next click
-        sortOrder = -sortOrder;
-        lastSortedHeader = header;
+    // Clear the table
+    while (table.firstChild) {
+        table.removeChild(table.firstChild);
     }
-});
+
+    // Add sorted rows
+    sortedRows.forEach(row => table.appendChild(row));
+
+    // Update sort classes
+    const headers = document.querySelectorAll('.tenants-table th');
+    headers.forEach(h => h.classList.remove('sorted-asc', 'sorted-desc'));
+
+    if (sortOrder === 1) {
+        header.classList.add('sorted-asc');
+    } else {
+        header.classList.add('sorted-desc');
+    }
+}
+
+// Export for testing environment
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        initializeTenants,
+        parseDate,
+        sortTableByColumn
+    };
+} else {
+    // For browser environment
+    document.addEventListener('DOMContentLoaded', initializeTenants);
+}

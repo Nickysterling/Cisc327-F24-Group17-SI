@@ -4,12 +4,34 @@
   "description": "",
   "main": "tenants.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage --config coverage.jest.config.js"
   },
   "jest": {
     "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [
       "<rootDir>/jest.setup.js"
+    ],
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "clover"
+    ],
+    "collectCoverageFrom": [
+      "../../apps/frontend/static/js/*.js"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "rootDir": "./",
+    "roots": [
+      "./"
     ]
   },
   "keywords": [],
