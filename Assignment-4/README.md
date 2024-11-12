@@ -208,15 +208,21 @@ Unit Test for `new_user.py`:
    cd Assignment-3/tests/tenant_tests
    ```
   
-2. Run tests with Jest and jsdom:
+2. Install the necessary packages (Instanbul (nyc), mocha, c8, and more):
   
    ```
-   npm test
+   npm install
    ```
 
-3. The output of the tenant tests should look like this image:
+3. Run coverage tests using the following command:
 
-   <img width="542" alt="Screenshot 2024-10-23 at 12 35 45 AM" src="https://github.com/user-attachments/assets/3e7c7b1d-7509-40c1-b539-305349d9816d">
+   ```
+   npm run coverage
+   ```
+
+5. The output of the tenant tests should look like this image:
+
+<img width="607" alt="Screenshot 2024-11-11 at 10 02 13 PM" src="https://github.com/user-attachments/assets/a935e4c8-1f40-4016-80b3-8b5461b8ebaa">
 
 ## Database Querying
 After SQLite installation, you can query the `rentease.db` database directly.
