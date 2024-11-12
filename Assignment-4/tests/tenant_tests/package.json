@@ -1,48 +1,52 @@
 {
-  "name": "frontend",
+  "name": "tenant-tests",
   "version": "1.0.0",
   "description": "",
-  "main": "tenants.js",
+  "main": "tenants.test.js",
   "scripts": {
-    "test": "jest",
-    "test:coverage": "jest --coverage --config coverage.jest.config.js"
+    "test": "npx c8 npx mocha .",
+    "coverage": "npx c8 --reporter=html --reporter=text npx mocha ."
   },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": [
-      "<rootDir>/jest.setup.js"
+  "mocha": {
+    "require": "./setup.js",
+    "extension": ["js"],
+    "spec": "tenants.test.js"
+  },
+  "c8": {
+    "all": true,
+    "include": [
+      "../../apps/frontend/static/js/tenants.js"
     ],
-    "collectCoverage": true,
-    "coverageDirectory": "coverage",
-    "coverageReporters": [
+    "exclude": [
+      "node_modules/**",
+      "coverage/**",
+      "*.test.js",
+      "setup.js",
+      "coverage.jest.config.js"
+    ],
+    "reporter": [
       "text",
-      "lcov",
-      "clover"
+      "text-summary",
+      "html",
+      "lcov"
     ],
-    "collectCoverageFrom": [
-      "../../apps/frontend/static/js/*.js"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "src"
-    ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/"
-    ],
-    "rootDir": "./",
-    "roots": [
-      "./"
-    ]
+    "check-coverage": true,
+    "branches": 80,
+    "lines": 80,
+    "functions": 80,
+    "statements": 80,
+    "report-dir": "./coverage",
+    "skip-full": false,
+    "clean": true
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
-    "text-encoding": "^0.7.0"
-  },
-  "dependencies": {
-    "jsdom": "^25.0.1"
+    "c8": "^8.0.1",
+    "mocha": "^10.2.0",
+    "jsdom": "^25.0.1",
+    "chai": "^4.3.10",
+    "sinon": "^17.0.1"
   }
 }

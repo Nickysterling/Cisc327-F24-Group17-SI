@@ -274,7 +274,7 @@ After SQLite installation, you can query the `rentease.db` database directly.
 ## Project Structure
 
 ```
-Assignment-3/
+Assignment-4/
 ├── apps/
 │   ├── backend/
 │   │   ├── login/
@@ -298,5 +298,5 @@ Assignment-3/
 |----------------------------------------|----------------------------------------------------------------------
 | Samhith Sripada (20232740)             | 1. Updated the test cases for backend verification
 | Nicholas Seegobin (20246787)           | 1. Implemented database using SQLite
-| Rodrigo Del Aguila Velarde (20275528)  | 1. Simplified code and added comments
+| Rodrigo Del Aguila Velarde (20275528)  | 1. Updated and created logs for the test cases for frontend coverage
 |                                        | 
