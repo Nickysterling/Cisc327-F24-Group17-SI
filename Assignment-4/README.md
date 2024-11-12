@@ -20,10 +20,10 @@ git clone https://github.com/Nickysterling/Cisc327-F24-Group17-SI.git
 
 2. Then, open the cloned repository in your terminal
 
-3. Navigate to the Assignment-3 directory using the command:
+3. Navigate to the Assignment-4 directory using the command:
 
 ```
-cd Assignment-3
+cd Assignment-4
 ```
 
 ### 2. Install Python Packages
@@ -102,7 +102,7 @@ License: MIT
 1. Navigate to the `tenant_tests` directory:
   
    ```
-   cd Assignment-3/tests/tenant_tests
+   cd Assignment-4/tests/tenant_tests
    ```
   
 2. Install npm packages:
@@ -205,7 +205,7 @@ Unit Test for `new_user.py`:
 1. Navigate to the `tenant_tests` directory:
 
    ```
-   cd Assignment-3/tests/tenant_tests
+   cd Assignment-4/tests/tenant_tests
    ```
   
 2. Install the necessary packages (Instanbul (nyc), mocha, c8, and more):
@@ -230,7 +230,7 @@ After SQLite installation, you can query the `rentease.db` database directly.
 1. Navigate to the `data` directory:
 
    ```
-   cd Assignment-3/data
+   cd Assignment-4/data
    ```
 
 2. Open the SQLite Command-Line Interface:
