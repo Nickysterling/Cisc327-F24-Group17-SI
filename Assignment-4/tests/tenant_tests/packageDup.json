@@ -1,0 +1,52 @@
+{
+  "name": "tenant-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tenants.test.js",
+  "scripts": {
+    "test": "npx c8 npx mocha .",
+    "coverage": "npx c8 --reporter=html --reporter=text npx mocha ."
+  },
+  "mocha": {
+    "require": "./setup.js",
+    "extension": ["js"],
+    "spec": "tenants.test.js"
+  },
+  "c8": {
+    "all": true,
+    "include": [
+      "../../apps/frontend/static/js/tenants.js"
+    ],
+    "exclude": [
+      "node_modules/**",
+      "coverage/**",
+      "*.test.js",
+      "setup.js",
+      "coverage.jest.config.js"
+    ],
+    "reporter": [
+      "text",
+      "text-summary",
+      "html",
+      "lcov"
+    ],
+    "check-coverage": true,
+    "branches": 80,
+    "lines": 80,
+    "functions": 80,
+    "statements": 80,
+    "report-dir": "./coverage",
+    "skip-full": false,
+    "clean": true
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "c8": "^8.0.1",
+    "mocha": "^10.2.0",
+    "jsdom": "^25.0.1",
+    "chai": "^4.3.10",
+    "sinon": "^17.0.1"
+  }
+}

@@ -4,12 +4,13 @@
   "description": "",
   "main": "tenants.test.js",
   "scripts": {
-    "test": "npx c8 npx mocha .",
-    "coverage": "npx c8 --reporter=html --reporter=text npx mocha ."
+    "coverage": "nyc --reporter=text-summary --reporter=html mocha"
   },
   "mocha": {
     "require": "./setup.js",
-    "extension": ["js"],
+    "extension": [
+      "js"
+    ],
     "spec": "tenants.test.js"
   },
   "c8": {
@@ -43,10 +44,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "c8": "^8.0.1",
-    "mocha": "^10.2.0",
-    "jsdom": "^25.0.1",
+    "c8": "^10.1.2",
     "chai": "^4.3.10",
+    "cross-spawn": "^7.0.3",
+    "istanbul-lib-coverage": "^3.0.0",
+    "istanbul-lib-report": "^3.0.1",
+    "jsdom": "^25.0.1",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
     "sinon": "^17.0.1"
   }
 }

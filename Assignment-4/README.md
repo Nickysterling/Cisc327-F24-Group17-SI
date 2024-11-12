@@ -162,7 +162,7 @@ Since this project uses SQLite as its database backend, follow these instruction
 1. Navigate to the project's root directory in your terminal after cloning the repository
 
    ```
-   cd Assigment-3
+   cd Assigment-4
    ```
 
 2. Start the Flask application:
