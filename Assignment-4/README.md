@@ -1,4 +1,4 @@
-# CMPE 327 - Assignment 3: Rental Management Portal
+# CMPE 327 - Assignment 4: Rental Management Portal
 
 This repository contains a backend and frontend application with user authentication functionality.
 
