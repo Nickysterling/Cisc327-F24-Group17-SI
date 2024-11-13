@@ -232,7 +232,7 @@ With Code Coverage details:
 
 ### 1. Running a code coverage test for the Python code:
 
-> Follow the instructions in [running unit tests for user and login features](https://github.com/Nickysterling/Cisc327-F24-Group17-SI/main/Assignment-4/README.md#1-unit-tests-for-user-and-login-features), your output should look similar to the image below:
+> Follow the instructions in "Running Unit Tests - 2. Tenant Page Testing", your output should look similar to the image below:
 
 <img width="607" alt="Screenshot 2024-11-11 at 10 02 13 PM" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-4/report_and_screenshots/CMPE_A4_3_with_abs_imports_ss.png?raw=true">
 
