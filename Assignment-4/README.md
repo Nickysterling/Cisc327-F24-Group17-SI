@@ -321,6 +321,5 @@ Assignment-4/
 | Name                                   | Task/Contribution      
 |----------------------------------------|----------------------------------------------------------------------
 | Samhith Sripada (20232740)             | 1. Updated the test cases for backend verification
-| Nicholas Seegobin (20246787)           | 1. Implemented database using SQLite
+| Nicholas Seegobin (20246787)           | 1. Created a report to document the coverage test analysis.
 | Rodrigo Del Aguila Velarde (20275528)  | 1. Updated and created logs for the test cases for frontend coverage
-|                                        | 
