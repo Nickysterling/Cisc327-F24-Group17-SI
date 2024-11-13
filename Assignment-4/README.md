@@ -180,7 +180,7 @@ The flask server should start running on your local machine on port 5000.
 1. Navigate to the `unit_tests` directory:
 
    ```
-   cd tests/unit_tests
+   cd Cisc327-F24-Group17-SI/Assignment-4/tests/unit_tests
    ```
 
 2. Run the backend unit tests:
@@ -205,7 +205,7 @@ Unit Test for `new_user.py`:
 1. Navigate to the `tenant_tests` directory:
 
    ```
-   cd Assignment-4/tests/tenant_tests
+   cd Cisc327-F24-Group17-SI/Assignment-4/tests/tenant_tests
    ```
   
 2. Install the necessary packages (Instanbul (nyc), mocha, c8, and more):
@@ -220,9 +220,27 @@ Unit Test for `new_user.py`:
    npm run coverage
    ```
 
-5. The output of the tenant tests should look like this image:
+4. The output of the tenant tests should look like this image:
 
 <img width="607" alt="Screenshot 2024-11-11 at 10 02 13 PM" src="https://github.com/user-attachments/assets/a935e4c8-1f40-4016-80b3-8b5461b8ebaa">
+
+With Code Coverage details:
+
+<img width="607" alt="Screenshot 2024-11-11 at 10 02 13 PM" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-4/report_and_screenshots/CMPE_A4_4_tenantJS-tests_coverage.png?raw=true">
+
+## Code Coverage
+
+### 1. Running a code coverage test for the Python code:
+
+> Follow the instructions in "Running Unit Tests - 1. Unit Tests for User and Login Features", your output should look similar to the image below:
+
+<img width="607" alt="Screenshot 2024-11-11 at 10 02 13 PM" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-4/report_and_screenshots/CMPE_A4_3_with_abs_imports_ss.png?raw=true">
+
+### 2. Running a code coverage test for the tenant JS code 
+
+> Follow the instructions in "Running Unit Tests - 2. Tenant Page Testing". You should get an output that looks like the image below:
+
+<img width="607" alt="Screenshot 2024-11-11 at 10 02 13 PM" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-4/report_and_screenshots/CMPE_A4_4_tenantJS-tests_coverage.png?raw=true">
 
 ## Database Querying
 After SQLite installation, you can query the `rentease.db` database directly.
