@@ -8,6 +8,7 @@ app = Flask(
     static_folder="apps/frontend/static",
 )
 
+
 # Route for user registration
 @app.route("/", methods=["GET", "POST"])
 def register():
@@ -29,7 +30,7 @@ def register():
 
 
 # Route to simulate registration for a Google user
-@app.route("/google_redirect")
+@app.route("/google_redirect", methods=["GET", "POST"])
 def google_redirect():
 
     # Assign a mock credential set for google user
@@ -38,12 +39,36 @@ def google_redirect():
     # Ensure the iterator is two digits, with leading zeros if necessary
     formattedIterator = str(userIterator).zfill(2)
 
-    newUser = User(
-        username=f"google_user_{formattedIterator}",
-        email=f"google_user_{formattedIterator}@gmail.com",
-        password="123",
-        user_type="Landlord",
-    )
+    if request.method == "POST":
+
+        newUser = User(
+            username=(
+                f"google_user_{formattedIterator}"
+                if request.form["username"] == ""
+                else request.form["username"]
+            ),
+            email=(
+                f"google_user_{formattedIterator}@gmail.com"
+                if request.form["email"] == ""
+                else request.form["email"]
+            ),
+            password=(
+                "123" if request.form["password"] == "" else request.form["password"]
+            ),
+            user_type=(
+                "Landlord"
+                if request.form["user_type"] == ""
+                else request.form["user_type"]
+            ),
+        )
+
+    else:
+        newUser = User(
+            username=f"google_user_{formattedIterator}",
+            email=f"google_user_{formattedIterator}@gmail.com",
+            password="123",
+            user_type="Landlord",
+        )
 
     # add to existing set of google users in database
     if setUserData(newUser=newUser, isGoogleAuth=True):
@@ -130,7 +155,7 @@ def google_signin():
         if account.email == email:
             # Email recognized, redirect to password entry page
             return redirect(url_for("password_entry", email=email))
-        
+
     # Email not recognized, redirect back with error parameter
     return redirect(url_for("choose_google_account", error=1))
 
@@ -152,7 +177,7 @@ def password_verify(email):
         if account.password == password and account.email == email:
             # Password is correct, redirect to login success page
             return redirect(url_for("login_success", username=account.username))
-        
+
     # Password is incorrect, redirect back to the password page with an error
     return redirect(url_for("password_entry", email=email, error=1))
 
