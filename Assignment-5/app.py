@@ -30,7 +30,7 @@ def register():
 
 
 # Route to simulate registration for a Google user
-@app.route("/google_redirect", methods=["", "POST"])
+@app.route("/google_redirect", methods=["GET", "POST"])
 def google_redirect():
 
     # Assign a mock credential set for google user
@@ -62,12 +62,20 @@ def google_redirect():
             ),
         )
 
-        # add to existing set of google users in database
-        if setUserData(newUser=newUser, isGoogleAuth=True):
-            return redirect(url_for("register_success", username=newUser.username))
-        else:
-            # Add proper error handling for google registration failure
-            return redirect(url_for("register_failure", reason="user_exists"))
+    else:
+        newUser = User(
+            username=f"google_user_{formattedIterator}",
+            email=f"google_user_{formattedIterator}@gmail.com",
+            password="123",
+            user_type="Landlord",
+        )
+
+    # add to existing set of google users in database
+    if setUserData(newUser=newUser, isGoogleAuth=True):
+        return redirect(url_for("register_success", username=newUser.username))
+    else:
+        # Add proper error handling for google registration failure
+        return redirect(url_for("register_failure", reason="user_exists"))
 
 
 # Route for successful registration
