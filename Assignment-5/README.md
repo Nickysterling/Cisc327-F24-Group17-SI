@@ -1,4 +1,4 @@
-# CMPE 327 - Assignment 4: Rental Management Portal
+# CMPE 327 - Assignment 5: Rental Management Portal
 
 This repository contains a backend and frontend application with user authentication functionality.
 
@@ -20,10 +20,10 @@ git clone https://github.com/Nickysterling/Cisc327-F24-Group17-SI.git
 
 2. Then, open the cloned repository in your terminal
 
-3. Navigate to the Assignment-4 directory using the command:
+3. Navigate to the Assignment-5 directory using the command:
 
 ```
-cd Assignment-4
+cd Assignment-5
 ```
 
 ### 2. Install Python Packages
@@ -102,7 +102,7 @@ License: MIT
 1. Navigate to the `tenant_tests` directory:
   
    ```
-   cd Assignment-4/tests/tenant_tests
+   cd Assignment-5/tests/tenant_tests
    ```
   
 2. Install npm packages:
@@ -180,7 +180,7 @@ The flask server should start running on your local machine on port 5000.
 1. Navigate to the `unit_tests` directory:
 
    ```
-   cd Cisc327-F24-Group17-SI/Assignment-4/tests/unit_tests
+   cd Cisc327-F24-Group17-SI/Assignment-5/tests/unit_tests
    ```
 
 2. Run the backend unit tests:
@@ -205,7 +205,7 @@ Unit Test for `new_user.py`:
 1. Navigate to the `tenant_tests` directory:
 
    ```
-   cd Cisc327-F24-Group17-SI/Assignment-4/tests/tenant_tests
+   cd Cisc327-F24-Group17-SI/Assignment-5/tests/tenant_tests
    ```
   
 2. Install the necessary packages (Instanbul (nyc), mocha, c8, and more):
@@ -226,7 +226,7 @@ Unit Test for `new_user.py`:
 
 With Code Coverage details:
 
-<img width="607" alt="Screenshot 2024-11-11 at 10 02 13 PM" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-4/report_and_screenshots/CMPE_A4_4_tenantJS-tests_coverage.png?raw=true">
+<img width="607" alt="Screenshot 2024-11-11 at 10 02 13 PM" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-5/report_and_screenshots/CMPE_A4_4_tenantJS-tests_coverage.png?raw=true">
 
 ## Code Coverage
 
@@ -234,13 +234,34 @@ With Code Coverage details:
 
 > Follow the instructions in "Running Unit Tests - 2. Tenant Page Testing", your output should look similar to the image below:
 
-<img width="607" alt="Screenshot 2024-11-11 at 10 02 13 PM" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-4/report_and_screenshots/CMPE_A4_3_with_abs_imports_ss.png?raw=true">
+<img width="607" alt="Screenshot 2024-11-11 at 10 02 13 PM" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-5/report_and_screenshots/CMPE_A4_3_with_abs_imports_ss.png?raw=true">
 
 ### 2. Running a code coverage test for the tenant JS code 
 
 > Follow the instructions in "Running Unit Tests - 2. Tenant Page Testing". You should get an output that looks like the image below:
 
-<img width="607" alt="Screenshot 2024-11-11 at 10 02 13 PM" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-4/report_and_screenshots/CMPE_A4_4_tenantJS-tests_coverage.png?raw=true">
+<img width="607" alt="Screenshot 2024-11-11 at 10 02 13 PM" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-5/report_and_screenshots/CMPE_A4_4_tenantJS-tests_coverage.png?raw=true">
+
+## Integration Tests
+### 1. Performing an integration test for the Python code:
+
+From Cisc.. navigate to the integration tests directory:
+
+```
+cd Assignment-5
+```
+
+Then execute the pytest command below to run the integration test:
+
+```
+pytest -v tests/integration_tests/test_integration.py
+```
+
+It should provide an output that looks like the image below:
+
+<img width="607" alt="python_integration_test_ss.png" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-5/report_and_screenshots/python_integration_test_ss.png?raw=true">
+
+> Note: The `register.py` file has a cover of 81% since the function needed to direclty register new users is tested from the unit tests and part of the functionality assessed in the integration test itself. 
 
 ## Database Querying
 After SQLite installation, you can query the `rentease.db` database directly.
@@ -248,7 +269,7 @@ After SQLite installation, you can query the `rentease.db` database directly.
 1. Navigate to the `data` directory:
 
    ```
-   cd Assignment-4/data
+   cd Assignment-5/data
    ```
 
 2. Open the SQLite Command-Line Interface:
@@ -298,7 +319,7 @@ After SQLite installation, you can query the `rentease.db` database directly.
 ## Project Structure
 
 ```
-Assignment-4/
+Assignment-5/
 ├── apps/
 │   ├── backend/
 │   │   ├── login/
