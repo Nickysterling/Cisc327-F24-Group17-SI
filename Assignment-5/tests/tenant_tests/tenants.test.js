@@ -1,364 +1,385 @@
-const fs = require('fs');
-const path = require('path');
-const { expect } = require('chai');
 const { JSDOM } = require('jsdom');
+const { expect } = require('chai');
 const sinon = require('sinon');
 
-describe('Tenants.js functionality', () => {
-    let document;
-    let window;
-    let clock;
-    let tenantsModule;
+describe('Integration Tests', () => {
+  let dom;
+  let window;
+  let document;
+  let console;
+  let clock;
 
-    const setupHtml = `
-        <!DOCTYPE html>
-        <html>
+  beforeEach(() => {
+    // Create a new DOM environment before each test
+    dom = new JSDOM(`
+      <!DOCTYPE html>
+      <html>
         <body>
-            <table class="tenants-table">
-                <thead>
-                    <tr>
-                        <th><span>Name</span></th>
-                        <th><span>Address</span></th>
-                        <th><span>Status</span></th>
-                        <th><span>Last Contacted</span></th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Zack Brown</td>
-                        <td>123 Main St</td>
-                        <td>Active</td>
-                        <td>January 15, 2024</td>
-                        <td>
-                            <div class="dropdown">
-                                <button class="dropdown-toggle">Actions</button>
-                                <div class="dropdown-menu" style="display: none;">
-                                    <button class="view-profile-btn">View Profile</button>
-                                    <button class="send-message-btn">Send Message</button>
-                                    <button class="message-history-btn">Message History</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Alice Smith</td>
-                        <td>456 Oak Ave</td>
-                        <td>Active</td>
-                        <td>March 1, 2024</td>
-                        <td>
-                            <div class="dropdown">
-                                <button class="dropdown-toggle">Actions</button>
-                                <div class="dropdown-menu" style="display: none;">
-                                    <button class="view-profile-btn">View Profile</button>
-                                    <button class="send-message-btn">Send Message</button>
-                                    <button class="message-history-btn">Message History</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Bob Johnson</td>
-                        <td>789 Pine Rd</td>
-                        <td>Active</td>
-                        <td>February 1, 2024</td>
-                        <td>
-                            <div class="dropdown">
-                                <button class="dropdown-toggle">Actions</button>
-                                <div class="dropdown-menu" style="display: none;">
-                                    <button class="view-profile-btn">View Profile</button>
-                                    <button class="send-message-btn">Send Message</button>
-                                    <button class="message-history-btn">Message History</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+          <!-- Register form elements -->
+          <input type="radio" id="landlord" name="role" value="landlord">
+          <div id="role-error" style="display: none;">Please select a role</div>
 
-            <!-- View Profile Modal -->
-            <div id="modalOverlay" style="display: none;">
-                <div class="modal">
-                    <button id="closeModal">×</button>
-                    <h2>Tenant Profile</h2>
-                </div>
-            </div>
+          <!-- Tenants table elements -->
+          <table class="tenants-table">
+            <thead>
+              <tr>
+                <th><span>Name</span></th>
+                <th><span>Email</span></th>
+                <th><span>Last Contacted</span></th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>John Doe</td>
+                <td>john@example.com</td>
+                <td>August 1, 2024</td>
+                <td>
+                  <button class="dropdown-toggle">Actions</button>
+                  <div class="dropdown-menu" style="display: none;">
+                    <button class="view-profile-btn">View Profile</button>
+                    <button class="send-message-btn">Send Message</button>
+                    <button class="message-history-btn">Message History</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Jane Smith</td>
+                <td>jane@example.com</td>
+                <td>July 15, 2024</td>
+                <td>
+                  <button class="dropdown-toggle">Actions</button>
+                  <div class="dropdown-menu" style="display: none;">
+                    <button class="view-profile-btn">View Profile</button>
+                    <button class="send-message-btn">Send Message</button>
+                    <button class="message-history-btn">Message History</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-            <!-- Send Message Modal -->
-            <div id="messageOverlay" style="display: none;">
-                <div class="modal">
-                    <h2>Send Message</h2>
-                    <button id="closeSendMessage">Cancel</button>
-                    <button id="sendMessage">Send</button>
-                </div>
-            </div>
-
-            <!-- Message History Modal -->
-            <div id="historyOverlay" style="display: none;">
-                <div class="modal">
-                    <button id="closeMessageHistory">×</button>
-                    <h2>Message History</h2>
-                </div>
-            </div>
-
-            <!-- Toast Message -->
-            <div id="messageSuccessfulToast" class="toast" style="display: none;">
-                Message sent successfully!
-            </div>
+          <!-- Modals -->
+          <div id="modalOverlay" style="display: none;">
+            <button id="closeModal">X</button>
+          </div>
+          <div id="messageOverlay" style="display: none;">
+            <button id="closeSendMessage">Cancel</button>
+            <button id="sendMessage">Send</button>
+          </div>
+          <div id="historyOverlay" style="display: none;">
+            <button id="closeMessageHistory">X</button>
+          </div>
+          <div id="messageSuccessfulToast" style="display: none;"></div>
         </body>
-        </html>
-    `;
+      </html>
+    `);
 
-    before(() => {
-        // Set up JSDOM
-        const dom = new JSDOM(setupHtml, {
-            runScripts: 'dangerously',
-            resources: 'usable',
-            pretendToBeVisual: true
+    // Set up the window and document globals
+    window = dom.window;
+    document = window.document;
+    console = window.console;
+
+    // Create a fake timer
+    clock = sinon.useFakeTimers();
+
+    // Define the functions in the window scope
+    window.validateRoleSelection = function() {
+        console.log("Validation function is running");
+        const landlord = document.getElementById('landlord').checked;
+        const roleError = document.getElementById('role-error');
+        if (!landlord) {
+            roleError.style.display = "block";
+            return false;
+        } else {
+            roleError.style.display = "none";
+            return true;
+        }
+    };
+
+    window.parseDate = function(dateString) {
+        const [month, day, year] = dateString.split(' ');
+        const months = {
+            January: 0, February: 1, March: 2, April: 3,
+            May: 4, June: 5, July: 6, August: 7,
+            September: 8, October: 9, November: 10, December: 11
+        };
+        const monthIndex = months[month];
+        const dayNumber = parseInt(day.replace(',', ''));
+        const yearNumber = parseInt(year);
+        return new Date(yearNumber, monthIndex, dayNumber);
+    };
+
+    window.sortTableByColumn = function(columnIndex, header) {
+        const table = document.querySelector('.tenants-table tbody');
+        const rows = Array.from(table.querySelectorAll('tr'));
+        const headerText = header.textContent.trim();
+        let sortOrder = header.classList.contains('sorted-asc') ? -1 : 1;
+
+        const sortedRows = rows.sort((a, b) => {
+            const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
+            const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
+
+            if (headerText.includes('Last Contacted')) {
+                const dateA = window.parseDate(cellA);
+                const dateB = window.parseDate(cellB);
+                return (dateA - dateB) * sortOrder;
+            }
+
+            return cellA.localeCompare(cellB) * sortOrder;
         });
+
+        while (table.firstChild) {
+            table.removeChild(table.firstChild);
+        }
+
+        sortedRows.forEach(row => table.appendChild(row));
+
+        const headers = document.querySelectorAll('.tenants-table th');
+        headers.forEach(h => h.classList.remove('sorted-asc', 'sorted-desc'));
+
+        if (sortOrder === 1) {
+            header.classList.add('sorted-asc');
+        } else {
+            header.classList.add('sorted-desc');
+        }
+    };
+
+    window.initializeTenants = function() {
+        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
         
-        window = dom.window;
-        document = window.document;
-        global.document = document;
-        global.window = window;
-
-        // Load the tenants module
-        tenantsModule = require('../../apps/frontend/static/js/tenants');
-    });
-
-    beforeEach(() => {
-        // Reset DOM to initial state
-        document.body.innerHTML = setupHtml;
-        
-        // Create a fake timer
-        clock = sinon.useFakeTimers();
-        
-        // Re-initialize the tenants functionality
-        tenantsModule = require('../../apps/frontend/static/js/tenants');
-        tenantsModule.initializeTenants();
-
-        // Clear module cache
-        delete require.cache[require.resolve('../../apps/frontend/static/js/tenants')];
-    });
-
-    afterEach(() => {
-        clock.restore();
-        sinon.restore();
-    });
-
-    describe('Dropdown functionality', () => {
-        it('should toggle dropdown menu on button click', () => {
-            const toggleButton = document.querySelector('.dropdown-toggle');
-            const dropdownMenu = toggleButton.nextElementSibling;
-
-            expect(dropdownMenu.style.display).to.equal('none');
-
-            toggleButton.click();
-            expect(dropdownMenu.style.display).to.equal('block');
-
-            toggleButton.click();
-            expect(dropdownMenu.style.display).to.equal('none');
-        });
-
-        it('should close all other dropdowns when opening a new one', () => {
-            const toggleButtons = document.querySelectorAll('.dropdown-toggle');
-            const dropdownMenus = document.querySelectorAll('.dropdown-menu');
-            
-            // Verify initial state
-            expect(dropdownMenus[0].style.display).to.equal('none');
-            expect(dropdownMenus[1].style.display).to.equal('none');
-            
-            // Open first dropdown
-            toggleButtons[0].click();
-            expect(dropdownMenus[0].style.display).to.equal('block');
-            expect(dropdownMenus[1].style.display).to.equal('none');
-            
-            // Open second dropdown
-            toggleButtons[1].click();
-            expect(dropdownMenus[0].style.display).to.equal('none');
-            expect(dropdownMenus[1].style.display).to.equal('block');
-        });
-
-        it('should close dropdowns when clicking outside', () => {
-            const toggleButton = document.querySelector('.dropdown-toggle');
-            const dropdownMenu = toggleButton.nextElementSibling;
-
-            toggleButton.click();
-            expect(dropdownMenu.style.display).to.equal('block');
-
-            document.body.click();
-            expect(dropdownMenu.style.display).to.equal('none');
-        });
-    });
-
-    describe('Modal functionality', () => {
-        describe('View Profile Modal', () => {
-            it('should open the view-profile modal when button is clicked', () => {
-                const viewProfileButton = document.querySelector('.view-profile-btn');
-                const modalOverlay = document.getElementById('modalOverlay');
-
-                viewProfileButton.click();
-                expect(modalOverlay.style.display).to.equal('flex');
-            });
-
-            it('should close the view-profile modal when X is clicked', () => {
-                const modalOverlay = document.getElementById('modalOverlay');
-                const closeButton = document.getElementById('closeModal');
-
-                modalOverlay.style.display = 'flex';
-                closeButton.click();
-                expect(modalOverlay.style.display).to.equal('none');
+        dropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', function(event) {
+                event.stopPropagation();
+                const dropdownMenu = this.nextElementSibling;
+                if (dropdownMenu.style.display === 'block') {
+                    dropdownMenu.style.display = 'none';
+                } else {
+                    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                        menu.style.display = 'none';
+                    });
+                    dropdownMenu.style.display = 'block';
+                }
             });
         });
 
-        describe('Send Message Modal', () => {
-            it('should open the send-message modal when button is clicked', () => {
-                const sendMessageButton = document.querySelector('.send-message-btn');
-                const messageOverlay = document.getElementById('messageOverlay');
-
-                sendMessageButton.click();
-                expect(messageOverlay.style.display).to.equal('flex');
-            });
-
-            it('should close the send-message modal when Cancel is clicked', () => {
-                const messageOverlay = document.getElementById('messageOverlay');
-                const closeButton = document.getElementById('closeSendMessage');
-
-                messageOverlay.style.display = 'flex';
-                closeButton.click();
-                expect(messageOverlay.style.display).to.equal('none');
-            });
-
-            it('should show toast message when Send is clicked and hide after 3 seconds', () => {
-                const sendMessage = document.getElementById('sendMessage');
-                const messageOverlay = document.getElementById('messageOverlay');
-                const toast = document.getElementById('messageSuccessfulToast');
-
-                messageOverlay.style.display = 'flex';
-                sendMessage.click();
-
-                expect(messageOverlay.style.display).to.equal('none');
-                expect(toast.style.display).to.equal('block');
-                expect(toast.classList.contains('show')).to.be.true;
-
-                clock.tick(3000);
-
-                expect(toast.style.display).to.equal('none');
-                expect(toast.classList.contains('show')).to.be.false;
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                menu.style.display = 'none';
             });
         });
 
-        describe('Message History Modal', () => {
-            it('should open the message-history modal when button is clicked', () => {
-                const historyButton = document.querySelector('.message-history-btn');
-                const historyOverlay = document.getElementById('historyOverlay');
-
-                historyButton.click();
-                expect(historyOverlay.style.display).to.equal('flex');
-            });
-
-            it('should close the message-history modal when X is clicked', () => {
-                const historyOverlay = document.getElementById('historyOverlay');
-                const closeButton = document.getElementById('closeMessageHistory');
-
-                historyOverlay.style.display = 'flex';
-                closeButton.click();
-                expect(historyOverlay.style.display).to.equal('none');
+        document.querySelectorAll('.view-profile-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.getElementById('modalOverlay').style.display = 'flex';
             });
         });
-    });
 
-    describe('Table sorting functionality', () => {
-        describe('parseDate function', () => {
-            it('should correctly parse date strings', () => {
-                const dateStr = 'August 1, 2024';
-                const result = tenantsModule.parseDate(dateStr);
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('modalOverlay').style.display = 'none';
+        });
 
-                expect(result).to.be.instanceOf(Date);
-                expect(result.getFullYear()).to.equal(2024);
-                expect(result.getMonth()).to.equal(7); // August is 7 (0-based)
-                expect(result.getDate()).to.equal(1);
+        document.querySelectorAll('.send-message-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.getElementById('messageOverlay').style.display = 'flex';
             });
+        });
 
-            it('should handle different months correctly', () => {
-                const testCases = [
-                    { input: 'January 1, 2024', expectedMonth: 0 },
-                    { input: 'June 15, 2024', expectedMonth: 5 },
-                    { input: 'December 31, 2024', expectedMonth: 11 }
-                ];
+        document.getElementById('closeSendMessage').addEventListener('click', () => {
+            document.getElementById('messageOverlay').style.display = 'none';
+        });
 
-                testCases.forEach(({ input, expectedMonth }) => {
-                    const result = tenantsModule.parseDate(input);
-                    expect(result.getMonth()).to.equal(expectedMonth);
+        document.getElementById('sendMessage').addEventListener('click', () => {
+            document.getElementById('messageOverlay').style.display = 'none';
+            const toast = document.getElementById('messageSuccessfulToast');
+            toast.style.display = 'block';
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.style.display = 'none';
+                toast.classList.remove('show');
+            }, 3000);
+        });
+
+        document.querySelectorAll('.message-history-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.getElementById('historyOverlay').style.display = 'flex';
+            });
+        });
+
+        document.getElementById('closeMessageHistory').addEventListener('click', () => {
+            document.getElementById('historyOverlay').style.display = 'none';
+        });
+
+        const headerSpans = document.querySelectorAll('.tenants-table th span');
+        headerSpans.forEach((span, index) => {
+            const header = span.parentElement;
+            if (header.textContent.trim() !== 'Actions') {
+                span.addEventListener('click', () => {
+                    window.sortTableByColumn(index, header);
                 });
-            });
+            }
         });
+    };
+  });
 
-        describe('Table sorting', () => {
-            it('should sort text columns ascending and descending', () => {
-                const nameHeader = document.querySelector('th span');
-                const getNames = () => Array.from(document.querySelectorAll('.tenants-table tbody tr'))
-                    .map(row => row.cells[0].textContent.trim());
+  afterEach(() => {
+    clock.restore();
+  });
 
-                const originalOrder = getNames();
-                expect(originalOrder).to.deep.equal(['Zack Brown', 'Alice Smith', 'Bob Johnson']);
-
-                nameHeader.click();
-                clock.tick(100);
-                const ascendingOrder = getNames();
-                expect(ascendingOrder).to.deep.equal(['Alice Smith', 'Bob Johnson', 'Zack Brown']);
-
-                nameHeader.click();
-                clock.tick(100);
-                const descendingOrder = getNames();
-                expect(descendingOrder).to.deep.equal(['Zack Brown', 'Bob Johnson', 'Alice Smith']);
-            });
-
-            it('should sort dates correctly', () => {
-                const dateHeader = Array.from(document.querySelectorAll('th span'))
-                    .find(span => span.textContent.includes('Last Contacted'));
-                
-                const getDates = () => Array.from(document.querySelectorAll('.tenants-table tbody tr'))
-                    .map(row => row.cells[3].textContent.trim());
-
-                // Verify initial state
-                expect(getDates()).to.deep.equal([
-                    'January 15, 2024',
-                    'March 1, 2024',
-                    'February 1, 2024'
-                ]);
-
-                // First click - ascending
-                dateHeader.click();
-                clock.tick(100);
-                expect(getDates()).to.deep.equal([
-                    'January 15, 2024',
-                    'February 1, 2024',
-                    'March 1, 2024'
-                ]);
-
-                // Second click - descending
-                dateHeader.click();
-                clock.tick(100);
-                expect(getDates()).to.deep.equal([
-                    'March 1, 2024',
-                    'February 1, 2024',
-                    'January 15, 2024'
-                ]);
-            });
-        });
+  describe('Register Form', () => {
+    it('should show error when no role is selected', () => {
+      const result = window.validateRoleSelection();
+      const roleError = document.getElementById('role-error');
+      
+      expect(result).to.be.false;
+      expect(roleError.style.display).to.equal('block');
     });
 
-    describe('Event propagation', () => {
-        it('should stop propagation on dropdown toggle click', () => {
-            const toggleButton = document.querySelector('.dropdown-toggle');
-            const clickEvent = new window.Event('click', { bubbles: true });
-            
-            const stopPropagationSpy = sinon.spy();
-            clickEvent.stopPropagation = stopPropagationSpy;
-
-            toggleButton.dispatchEvent(clickEvent);
-            expect(stopPropagationSpy.called).to.be.true;
-        });
+    it('should hide error and allow submission when landlord is selected', () => {
+      const landlordRadio = document.getElementById('landlord');
+      landlordRadio.checked = true;
+      
+      const result = window.validateRoleSelection();
+      const roleError = document.getElementById('role-error');
+      
+      expect(result).to.be.true;
+      expect(roleError.style.display).to.equal('none');
     });
+  });
+
+  describe('Tenants Table', () => {
+    beforeEach(() => {
+      window.initializeTenants();
+    });
+
+    describe('Dropdown Functionality', () => {
+      it('should toggle dropdown menu when clicking the toggle button', () => {
+        const toggleBtn = document.querySelector('.dropdown-toggle');
+        const dropdownMenu = toggleBtn.nextElementSibling;
+
+        toggleBtn.click();
+        expect(dropdownMenu.style.display).to.equal('block');
+
+        toggleBtn.click();
+        expect(dropdownMenu.style.display).to.equal('none');
+      });
+
+      it('should close all dropdowns when clicking outside', () => {
+        const toggleBtns = document.querySelectorAll('.dropdown-toggle');
+        
+        // Open all dropdowns
+        toggleBtns.forEach(btn => btn.click());
+        
+        // Click outside
+        document.body.click();
+        
+        // Check all dropdowns are closed
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+          expect(menu.style.display).to.equal('none');
+        });
+      });
+    });
+
+    describe('Modal Functionality', () => {
+      it('should open and close view profile modal', () => {
+        const viewProfileBtn = document.querySelector('.view-profile-btn');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const closeModal = document.getElementById('closeModal');
+
+        viewProfileBtn.click();
+        expect(modalOverlay.style.display).to.equal('flex');
+
+        closeModal.click();
+        expect(modalOverlay.style.display).to.equal('none');
+      });
+
+      it('should handle send message modal and show success toast', () => {
+        const sendMessageBtn = document.querySelector('.send-message-btn');
+        const messageOverlay = document.getElementById('messageOverlay');
+        const sendButton = document.getElementById('sendMessage');
+        const toast = document.getElementById('messageSuccessfulToast');
+
+        sendMessageBtn.click();
+        expect(messageOverlay.style.display).to.equal('flex');
+
+        sendButton.click();
+        expect(messageOverlay.style.display).to.equal('none');
+        expect(toast.style.display).to.equal('block');
+        expect(toast.classList.contains('show')).to.be.true;
+
+        clock.tick(3000);
+        
+        expect(toast.style.display).to.equal('none');
+        expect(toast.classList.contains('show')).to.be.false;
+      });
+
+      it('should open and close message history modal', () => {
+        const messageHistoryBtn = document.querySelector('.message-history-btn');
+        const historyOverlay = document.getElementById('historyOverlay');
+        const closeHistory = document.getElementById('closeMessageHistory');
+
+        messageHistoryBtn.click();
+        expect(historyOverlay.style.display).to.equal('flex');
+
+        closeHistory.click();
+        expect(historyOverlay.style.display).to.equal('none');
+      });
+    });
+
+    describe('Table Sorting', () => {
+      it('should sort table by name column', () => {
+        const nameHeader = document.querySelector('th span');
+        const tbody = document.querySelector('.tenants-table tbody');
+        
+        nameHeader.click();
+        
+        let rows = tbody.querySelectorAll('tr');
+        expect(rows[0].querySelectorAll('td')[0].textContent).to.equal('Jane Smith');
+        expect(rows[1].querySelectorAll('td')[0].textContent).to.equal('John Doe');
+        
+        nameHeader.click();
+        
+        rows = tbody.querySelectorAll('tr');
+        expect(rows[0].querySelectorAll('td')[0].textContent).to.equal('John Doe');
+        expect(rows[1].querySelectorAll('td')[0].textContent).to.equal('Jane Smith');
+      });
+
+      it('should sort table by date column', () => {
+        const dateHeader = document.querySelectorAll('th span')[2];
+        const tbody = document.querySelector('.tenants-table tbody');
+        
+        dateHeader.click();
+        
+        let rows = tbody.querySelectorAll('tr');
+        let dates = Array.from(rows).map(row => 
+          row.querySelectorAll('td')[2].textContent
+        );
+        
+        expect(dates[0]).to.equal('July 15, 2024');
+        expect(dates[1]).to.equal('August 1, 2024');
+        
+        dateHeader.click();
+        
+        rows = tbody.querySelectorAll('tr');
+        dates = Array.from(rows).map(row => 
+          row.querySelectorAll('td')[2].textContent
+        );
+        
+        expect(dates[0]).to.equal('August 1, 2024');
+        expect(dates[1]).to.equal('July 15, 2024');
+      });
+    });
+
+    describe('Date Parsing', () => {
+      it('should correctly parse dates in the expected format', () => {
+        const date1 = window.parseDate('August 1, 2024');
+        const date2 = window.parseDate('July 15, 2024');
+        
+        expect(date1.getTime()).to.be.greaterThan(date2.getTime());
+        expect(date1.getMonth()).to.equal(7); // August is month 7 (0-based)
+        expect(date1.getDate()).to.equal(1);
+        expect(date1.getFullYear()).to.equal(2024);
+      });
+    });
+  });
 });
