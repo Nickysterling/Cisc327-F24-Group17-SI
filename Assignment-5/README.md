@@ -274,7 +274,6 @@ npm run coverage
 
 It should provide an output that looks like this:
 
-
 <img width="607" alt="js_integration_test.png" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-5/report_and_screenshots/js_integration_test.png?raw=true">
 
 ## Database Querying
@@ -359,4 +358,4 @@ Assignment-5/
 | ------------------------------------- | ----------------------------------------------------------------------------------- |
 | Samhith Sripada (20232740)            | 1. Implemented integration tests for Python routes.<br />2. Updated README.         |
 | Nicholas Seegobin (20246787)          | 1. Created a report to document the coverage test analysis.<br />2. Updated README. |
-| Rodrigo Del Aguila Velarde (20275528) | 1. Implemented integration tests for Javascript features.                           |
+| Rodrigo Del Aguila Velarde (20275528) | 1. Implemented integration tests for Javascript features.<br />2. Updated README.   |
