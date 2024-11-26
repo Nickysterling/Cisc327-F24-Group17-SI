@@ -256,6 +256,27 @@ It should provide an output that looks like the image below:
 
 > Note: The `register.py` file has a cover of 81% since the function needed to direclty register new users is tested from the unit tests and part of the functionality assessed in the integration test itself.
 
+### 2. Peforming an integration test for the JavaScript code:
+
+From Cisc.. navigate to the tenant_tests directory:
+
+```
+cd Assignment-5
+cd tests
+cd tenant_tests
+```
+
+Then execute the npm command to run the integration tests for both register and tenant pages by typing the following:
+
+```
+npm run coverage
+```
+
+It should provide an output that looks like this:
+
+
+<img width="607" alt="js_integration_test.png" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-5/report_and_screenshots/js_integration_test.png?raw=true">
+
 ## Database Querying
 
 After SQLite installation, you can query the `rentease.db` database directly.
