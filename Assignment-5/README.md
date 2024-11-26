@@ -190,10 +190,10 @@ The flask server should start running on your local machine on port 5000.
 3. The output of the unit tests should look like this image (broken into separate images for readability)
 
 Unit Test for `login.py`:
-`<img width="1729" alt="Unit Tests for Login" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-3/tests/CMPE327_A3_login_test_cases_ss.png?raw=true">`
+![Unit Tests for Login](https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-3/tests/CMPE327_A3_login_test_cases_ss.png?raw=true)
 
 Unit Test for `new_user.py`:
-`<img width="1729" alt="Unit Tests for Login" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-3/tests/CMPE327_A3_new-user_test_cases_ss.png?raw=true">`
+![Unit Test for login.py](https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-3/tests/CMPE327_A3_new-user_test_cases_ss.png?raw=true)
 
 ### 2. Tenant Page Testing
 
