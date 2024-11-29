@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in - Google Accounts</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="signin-box">
+            <!-- Google logo -->
+            <div class="logo">
+                <img src="{{ url_for('static', filename='img/login_img/google_icon.png') }}" alt="Google Logo">
+            </div>
+
+            <!-- Sign in text -->
+            <h1>Sign in</h1>
+            <p class="subtext">Use your Google Account</p>
+
+            <!-- Display error message if email is not recognized -->
+            {% if error %}
+            <div class="error-message">
+                <p>The email you entered is not recognized. Please try again or create an account.</p>
+            </div>
+            {% endif %}
+
+            <!-- Email input form -->
+            <form action="{{ url_for('google_signin') }}" method="POST">
+                <div class="input-field">
+                    <input type="text" name="email" placeholder="Email or phone" required>
+                </div>
+                <div class="forgot-email">
+                    <a href="https://accounts.google.com/signin/v2/usernamerecovery">Forgot email?</a>
+                </div>
+
+                <!-- Help text -->
+                <p class="help-text">
+                    Login using email in this format: <a href="#">google_user_xx@gmail.com</a>
+                </p>
+
+                <!-- Buttons -->
+                <div class="actions">
+                    <a href="{{ url_for('register') }}" class="create-account">Create account</a>
+                    <button type="submit" class="next-button">Next</button>
+                </div>                
+            </form>
+        </div>
+
+        <!-- Footer with links -->
+        <div class="footer">
+            <div class="footer-links">
+                <a href="#">Help</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
