@@ -276,6 +276,36 @@ It should provide an output that looks like this:
 
 <img width="607" alt="js_integration_test.png" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-5/report_and_screenshots/js_integration_test.png?raw=true">
 
+## End-to-End (E2E) Tests:
+### Setup - python specific portion
+
+1. Navigate to the `Assignment-6` folder:
+
+```
+cd Assignment-6
+```
+
+2. Install the packages in `requirements.txt` using `pip`, then install playwright:
+
+```
+pip install -r requirements.txt
+playwright install
+```
+
+### Run the E2E Tests:
+
+1. Run the project with the command (the tests will not run unless the local server is running):
+
+```
+flask run
+```
+
+2. On a seperate terminal go to the `Assignment-6` directory and run the test using the `pytest` command:
+
+```
+pytest tests/e2e_tests
+```
+
 ## Database Querying
 
 After SQLite installation, you can query the `rentease.db` database directly.
