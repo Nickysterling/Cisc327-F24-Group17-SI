@@ -306,6 +306,38 @@ flask run
 pytest tests/e2e_tests
 ```
 
+### Setup - JS specific portion
+
+1. Navigate to the `Assignment-6` folder:
+
+```
+cd Assignment-6
+```
+
+2. Navigate to the tenant_tests directory
+
+3. Install and set up the necessary packages:
+```
+npm install @playwright/test
+npx playwright install
+```
+
+### Running the tests
+
+1. Run the tests using the following command:
+```
+npx playwright test
+```
+This will run all the tests in the `tenant_tests` directory.
+
+2. After the tests run, open the HTML report:
+```
+npx playwright show-report .nyc_output/html-report
+```
+Click on the http link that is generated to see the testing report. It should look like this:
+
+<img width="607" alt="e2e_tests_tenant-and-register.png" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-6/report_and_screenshots/e2e_tests_tenant-and-register.png?raw=true">
+
 ## Database Querying
 
 After SQLite installation, you can query the `rentease.db` database directly.
