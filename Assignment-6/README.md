@@ -159,7 +159,7 @@ Since this project uses SQLite as its database backend, follow these instruction
 1. Navigate to the project's root directory in your terminal after cloning the repository
 
    ```
-   cd Assigment-5
+   cd Assigment-6
    ```
 2. Start the Flask application:
 
@@ -277,6 +277,7 @@ It should provide an output that looks like this:
 <img width="607" alt="js_integration_test.png" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-5/report_and_screenshots/js_integration_test.png?raw=true">
 
 ## End-to-End (E2E) Tests:
+
 ### Setup - python specific portion
 
 1. Navigate to the `Assignment-6` folder:
@@ -315,8 +316,8 @@ cd Assignment-6
 ```
 
 2. Navigate to the tenant_tests directory
-
 3. Install and set up the necessary packages:
+
 ```
 npm install @playwright/test
 npx playwright install
@@ -325,15 +326,19 @@ npx playwright install
 ### Running the tests
 
 1. Run the tests using the following command:
+
 ```
 npx playwright test
 ```
+
 This will run all the tests in the `tenant_tests` directory.
 
 2. After the tests run, open the HTML report:
+
 ```
 npx playwright show-report .nyc_output/html-report
 ```
+
 Click on the http link that is generated to see the testing report. It should look like this:
 
 <img width="607" alt="e2e_tests_tenant-and-register.png" src="https://github.com/Nickysterling/Cisc327-F24-Group17-SI/blob/main/Assignment-6/report_and_screenshots/e2e_tests_tenant-and-register.png?raw=true">
@@ -416,8 +421,8 @@ Assignment-6/
 
 ## Individual Contributions
 
-| Name                                  | Task/Contribution                                                                   |
-| ------------------------------------- | ----------------------------------------------------------------------------------- |
-| Samhith Sripada (20232740)            | 1. Implemented integration tests for Python routes.<br />2. Updated README.         |
-| Nicholas Seegobin (20246787)          | 1. Created a report to document the coverage test analysis.<br />2. Updated README. |
-| Rodrigo Del Aguila Velarde (20275528) | 1. Implemented integration tests for Javascript features.<br />2. Updated README.   |
+| Name                                  | Task/Contribution                                                                |
+| ------------------------------------- | -------------------------------------------------------------------------------- |
+| Samhith Sripada (20232740)            | 1. Implemented end-to-end tests for Python routes.<br />2. Updated README.      |
+| Nicholas Seegobin (20246787)          | 1. Created a report to document the end-to-end tests.<br />2. Updated README.    |
+| Rodrigo Del Aguila Velarde (20275528) | 1. Implemented end-to-end tests for Javascript features.<br />2. Updated README. |
