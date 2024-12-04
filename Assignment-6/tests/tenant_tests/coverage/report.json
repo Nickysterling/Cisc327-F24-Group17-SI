@@ -1,0 +1,99 @@
+{
+  "config": {
+    "configFile": "/Users/roddbeatz/Desktop/CODE/Cisc327-F24-Group17-SI/Assignment-6/tests/tenant_tests/playwright.config.js",
+    "rootDir": "/Users/roddbeatz/Desktop/CODE/Cisc327-F24-Group17-SI/Assignment-6/tests/tenant_tests/tests/tenant_tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        {
+          "outputFolder": "./.nyc_output/html-report"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "./coverage/report.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 15000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/roddbeatz/Desktop/CODE/Cisc327-F24-Group17-SI/Assignment-6/tests/tenant_tests/.nyc_output/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/roddbeatz/Desktop/CODE/Cisc327-F24-Group17-SI/Assignment-6/tests/tenant_tests/tests/tenant_tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.test.js"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/roddbeatz/Desktop/CODE/Cisc327-F24-Group17-SI/Assignment-6/tests/tenant_tests/.nyc_output/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/roddbeatz/Desktop/CODE/Cisc327-F24-Group17-SI/Assignment-6/tests/tenant_tests/tests/tenant_tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.test.js"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/roddbeatz/Desktop/CODE/Cisc327-F24-Group17-SI/Assignment-6/tests/tenant_tests/.nyc_output/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/roddbeatz/Desktop/CODE/Cisc327-F24-Group17-SI/Assignment-6/tests/tenant_tests/tests/tenant_tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.test.js"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "version": "1.49.0",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [],
+  "errors": [
+    {
+      "message": "Error: No tests found",
+      "stack": "Error: No tests found"
+    }
+  ],
+  "stats": {
+    "startTime": "2024-11-29T23:22:56.326Z",
+    "duration": 12.342000000000098,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
